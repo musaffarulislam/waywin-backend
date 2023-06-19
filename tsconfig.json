@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "es2020",
+    "outDir": "build",
+    "sourceMap": true,
+    "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "nodenext",
+    "noImplicitAny": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include":["src/**/*"]
+}
