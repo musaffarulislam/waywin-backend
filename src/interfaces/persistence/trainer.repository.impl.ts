@@ -1,5 +1,7 @@
 import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
+import AuthModel from '../../interfaces/models/AuthModel';
 import { ITrainerProfile } from '../../app/entity/trainer.entity';
+import { Auth } from '../../app/entity/auth.entity';
 
 export class TrainerRepositoryImpl {
   public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[], colorPalette: string): Promise<void> {
@@ -13,6 +15,7 @@ export class TrainerRepositoryImpl {
           'profile.experience': experience,
           'profile.mode': mode,
           'profile.colorPalette': colorPalette,
+          'isProfile': true,
         }
       })
     } catch (error) {
@@ -23,12 +26,15 @@ export class TrainerRepositoryImpl {
   public async findByAuthId(authId: string): Promise<ITrainer | null> {
     try{
       const trainer = await TrainerModel.findOne({authId}); 
-      console.log("rep :",trainer)
       return trainer
     }catch (error){
       throw new Error("Trainer not available")
     }
   }
+
+  public async findByAuthModel(authId: string): Promise<Auth | null> {
+    return AuthModel.findById(authId)
+}
 
 
 }

@@ -15,6 +15,16 @@ export class TrainerController {
         this.trainerService = new TrainerService(this.dependency);
     }
 
+    public getTrainerInfo = async (req: CustomRequest, res: Response) => {
+        try{
+            const trainerId = req.trainer?.authId;
+            const trainerInfo = await this.trainerService.getTrainerInfo(trainerId);
+            res.status(201).json(trainerInfo)
+        }catch(error){
+            res.status(400).json({error: "Something wrong"})
+        }
+    }
+
     public createProfile = async (req: CustomRequest, res: Response) => {
         try{
             const {services, description, tags, experience, mode, colorPalette} = req.body;
@@ -27,4 +37,14 @@ export class TrainerController {
             res.status(500).json({error: 'Internal server error'})
         }
     };
+
+    public getTrainerProfile = async (req: CustomRequest, res: Response) => {
+        try{
+            const trainerId = req.trainer?.authId;
+            const profileInfo = await this.trainerService.getTrainerProfile(trainerId);
+            res.status(201).json(profileInfo)
+        }catch(error){
+            res.status(400).json({error: "Something wrong"})
+        }
+    }
 }

@@ -12,7 +12,9 @@ const trainerRouter = (dependency:any) => {
   const trainerProfileValidator= new TrainerProfileValidator()
 
   
+  router.get('/getTrainer-info', verifyToken.verifyAccessToken, trainerController.getTrainerInfo);
   router.post('/create-profile', trainerProfileValidator.validateProfileData, verifyToken.verifyAccessToken, trainerController.createProfile);
+  router.get('/getTrainer-profile', verifyToken.verifyAccessToken, trainerController.getTrainerProfile);
 
 
   return router;
