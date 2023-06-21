@@ -5,12 +5,12 @@ export class TokenUtils {
   public readonly accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
   public readonly refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
-  public generateAccessToken = (auth: AuthModel) => {
-    return jwt.sign({ authId: auth._id }, this.accessTokenSecret, { expiresIn: '15m' });
+  public generateAccessToken = (authId: AuthModel) => {
+    return jwt.sign({ authId: authId }, this.accessTokenSecret, { expiresIn: '1d' });
   };
 
-  public generateRefreshToken = (auth: AuthModel) => {
-    return jwt.sign({ authId: auth._id }, this.refreshTokenSecret, { expiresIn: '7d' });
+  public generateRefreshToken = (authId: AuthModel) => {
+    return jwt.sign({ authId: authId }, this.refreshTokenSecret, { expiresIn: '7d' });
   };
 
   public verifyToken = (token: string, secret: string) => {

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { TokenUtils } from '../utils/tokenUtils';
-import { Auth } from '../../app/entity/auth.entity';
+import { TokenUtils } from '../../utils/tokenUtils';
+import { Auth } from '../../../app/entity/auth.entity';
 
 export class AuthService {
   private readonly tokenUtils: TokenUtils;
@@ -23,8 +23,8 @@ export class AuthService {
     if(!checkPassword){
       throw new Error('Invalid credentials');
     }
-    const accessToken = this.tokenUtils.generateAccessToken(auth);
-    const refreshToken = this.tokenUtils.generateRefreshToken(auth);
+    const accessToken = this.tokenUtils.generateAccessToken(auth._id);
+    const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
     return { accessToken, refreshToken, role: auth.role };
   }
 
@@ -46,6 +46,11 @@ export class AuthService {
     } catch (error) {
       return null;
     }
+  }
+
+  public generateAccessToken(verifyToken: any): { accessToken: string} {
+    const accessToken = this.tokenUtils.generateAccessToken(verifyToken.authId);
+    return { accessToken }
   }
 
   public async checkUsernameExist(username: string):  Promise<void> {

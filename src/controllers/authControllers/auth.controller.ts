@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthService } from '../../usecases/services/auth.service';
+import { AuthService } from '../../usecases/services/authServices/auth.service';
 import { Auth } from '../../app/entity/auth.entity';
 
 export class AuthController {

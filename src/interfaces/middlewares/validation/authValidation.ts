@@ -4,7 +4,7 @@ import Joi, { Schema, ValidationResult } from 'joi';
 const usernameRegex = /^[a-zA-Z0-9_-]+$/;
 
 export class AuthValidator {
-  private static usernameSchema: Schema = Joi.string().regex(usernameRegex).trim().min(5).required().messages({
+  private static usernameSchema: Schema = Joi.string().regex(/^[a-zA-Z0-9_-]+$/).trim().min(5).required().messages({
     'string.empty': 'Username is required',
     'string.pattern.base': 'Username can only contain alphanumeric characters, underscore, and hyphen',
     'string.min': 'Username must be at least 5 character long',

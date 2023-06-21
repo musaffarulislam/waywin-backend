@@ -12,10 +12,13 @@ const authRouter = (dependency:any) => {
   const verifyToken = new VerifyTokenController(dependency.authRepository)
   const authValidator= new AuthValidator()
 
+  
   router.post('/signup', authValidator.validateSignupData, authController.signup);
   router.post('/login', authValidator.validateLoginData, authController.login);
+  router.post('/token', verifyToken.verifyRefreshToken);
 
-  router.get('/checkUsername/:username', verifyToken.verifyAccessToken , authCheckVariable.checkUsernameExist);
+
+  router.get('/checkUsername/:username', authCheckVariable.checkUsernameExist);
   router.get('/checkEmail/:email', authCheckVariable.checkEmailExist);
   router.get('/checkPhoneNumber/:phoneNumber', authCheckVariable.checkPhoneNumberExist);
   
