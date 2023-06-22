@@ -1,7 +1,5 @@
 import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
-import AuthModel from '../../interfaces/models/AuthModel';
-import { ITrainerProfile } from '../../app/entity/trainer.entity';
-import { Auth } from '../../app/entity/auth.entity';
+import cloudinary from '../config/cloudinary';
 
 export class TrainerRepositoryImpl {
   public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[], colorPalette: string): Promise<void> {
@@ -25,16 +23,30 @@ export class TrainerRepositoryImpl {
 
   public async findByAuthId(authId: string): Promise<ITrainer | null> {
     try{
-      const trainer = await TrainerModel.findOne({authId}); 
-      return trainer
+      return await TrainerModel.findOne({authId}).populate('authId'); 
     }catch (error){
       throw new Error("Trainer not available")
     }
   }
 
-  public async findByAuthModel(authId: string): Promise<Auth | null> {
-    return AuthModel.findById(authId)
-}
+  public async uploadProfileImage(image: string, trainerId: string): Promise<ITrainer | null> {
+    try{
+      const result= await cloudinary.uploader.upload(image,{
+        folder:"profileImage"
+      })
+      const imageBuffer = {
+          public_id:result.public_id,
+          url:result.secure_url
+        }
+      return await TrainerModel.findOneAndUpdate({authId: trainerId},
+        {$set:{
+          "profileImage" : imageBuffer
+        }
+      }, {new: true}); 
+    }catch (error){
+      throw new Error("Trainer not available")
+    }
+  }
 
 
 }

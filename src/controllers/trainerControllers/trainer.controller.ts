@@ -38,6 +38,18 @@ export class TrainerController {
         }
     };
 
+    public uploadProfileImage = async (req: CustomRequest, res: Response) => {
+        try{
+            const { image } = req.body;
+            const trainerId = req.trainer?.authId
+            console.log(trainerId)
+            const profileImage = await this.trainerService.uploadProfileImage(image, trainerId )
+            res.status(201).json(profileImage)
+        }catch (error){
+            res.status(500).json({error: 'Internal server error'})
+        }
+    };
+
     public getTrainerProfile = async (req: CustomRequest, res: Response) => {
         try{
             const trainerId = req.trainer?.authId;

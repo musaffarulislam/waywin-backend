@@ -1,6 +1,5 @@
 import express from 'express';
 import { TrainerController } from '../../controllers/trainerControllers/trainer.controller';
-import { AuthCheckVariable } from '../../controllers/authControllers/auth.check.variable';
 import { TrainerProfileValidator } from '../middlewares/validation/trainerProfileValidation';
 import { VerifyTokenController } from '../../controllers/verifyToken.controller';
 
@@ -13,7 +12,9 @@ const trainerRouter = (dependency:any) => {
 
   
   router.get('/getTrainer-info', verifyToken.verifyAccessToken, trainerController.getTrainerInfo);
+
   router.post('/create-profile', trainerProfileValidator.validateProfileData, verifyToken.verifyAccessToken, trainerController.createProfile);
+  router.post('/upload-profile-image',verifyToken.verifyAccessToken,trainerController.uploadProfileImage)
   router.get('/getTrainer-profile', verifyToken.verifyAccessToken, trainerController.getTrainerProfile);
 
 

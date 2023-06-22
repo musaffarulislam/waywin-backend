@@ -9,16 +9,17 @@ export class TrainerService {
 
   public async getTrainerInfo(trainerId: string){
     try{
-      const authInfo = await this.trainerRepository.findByAuthModel(trainerId);
+      console.log("getTrainerInfo 1")
       const trainerDetails = await this.trainerRepository.findByAuthId(trainerId);
-      const isProfile = trainerDetails.isProfile;
+      const isProfile = trainerDetails?.isProfile;
+      const profileImage = trainerDetails?.profileImage?.url
       const selectedAuthInfo = {
-        _id: authInfo._id,
-        username: authInfo.username,
-        email: authInfo.email,
-        phoneNumber: authInfo.phoneNumber,
+        _id: trainerDetails?.authId?._id,
+        username: trainerDetails?.authId?.username,
+        email: trainerDetails?.authId?.email,
+        phoneNumber: trainerDetails?.authId?.phoneNumber,
       };
-      return {trainerInfo: selectedAuthInfo, isProfile};
+      return {trainerInfo: selectedAuthInfo, isProfile, profileImage};
     }catch(error){
       throw error
     }
@@ -26,10 +27,19 @@ export class TrainerService {
 
   public async createProfile({services, description, tags, experience, mode, colorPalette}: ITrainerProfile, trainerId: string){
     try{
-      const trainer = await this.trainerRepository.findByAuthId(trainerId);
       await this.trainerRepository.createTrainerProfile(trainerId,services, description, tags, experience, mode, colorPalette);
     }catch(error){
       throw error
+    }
+  }
+
+  public async uploadProfileImage(image: string, trainerId: string){
+    try{
+      const trainer = await this.trainerRepository.uploadProfileImage(image,trainerId);
+      const profileImage = trainer.profileImage?.url;
+      return {profileImage}
+    }catch(error){
+      throw error 
     }
   }
 

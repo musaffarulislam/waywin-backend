@@ -5,6 +5,10 @@ export interface ITrainer extends Document {
   authId: Schema.Types.ObjectId;
   profile: ITrainerProfile;
   wallate: number;
+  profileImage:{
+    public_id: string;
+    url: string;
+  };
   isProfile: boolean;
   isVarified: boolean;
   status: boolean;
@@ -21,6 +25,10 @@ const trainerSchema = new Schema<ITrainer>({
     colorPalette: String,
   },
   wallate: Number,
+  profileImage: {
+    public_id: {type: String, required: true},
+    url: {type: String, required: true},
+  },
   isProfile: { type: Boolean, default: false},
   isVarified: { type: Boolean, default: false },
   status: { type: Boolean, default: true },
