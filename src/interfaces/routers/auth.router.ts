@@ -21,6 +21,8 @@ const authRouter = (dependency:any) => {
   router.get('/checkUsername/:username', authCheckVariable.checkUsernameExist);
   router.get('/checkEmail/:email', authCheckVariable.checkEmailExist);
   router.get('/checkPhoneNumber/:phoneNumber', authCheckVariable.checkPhoneNumberExist);
+
+  router.post('/update-username', authCheckVariable.checkPhoneNumberExist);
   
   return router;
 };

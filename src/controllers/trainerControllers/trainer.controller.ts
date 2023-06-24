@@ -29,7 +29,6 @@ export class TrainerController {
         try{
             const {services, description, tags, experience, mode, colorPalette} = req.body;
             const trainerId = req.trainer?.authId
-            console.log(trainerId)
             const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode, colorPalette}
             await this.trainerService.createProfile(trainerProfile, trainerId )
             res.status(201).json({ message: 'Trainer profile created successfully'})
@@ -42,7 +41,6 @@ export class TrainerController {
         try{
             const { image } = req.body;
             const trainerId = req.trainer?.authId
-            console.log(trainerId)
             const profileImage = await this.trainerService.uploadProfileImage(image, trainerId )
             res.status(201).json(profileImage)
         }catch (error){

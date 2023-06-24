@@ -1,10 +1,10 @@
 import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
 import cloudinary from '../config/cloudinary';
 
-export class TrainerRepositoryImpl {
+export class TrainerRepositoryImpl { 
+  
   public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[], colorPalette: string): Promise<void> {
     try {
-      console.log(services, description)
       await TrainerModel.updateOne({authId: trainerId},
         {$set: {
           'profile.services': services,
@@ -12,7 +12,6 @@ export class TrainerRepositoryImpl {
           'profile.tags': tags,
           'profile.experience': experience,
           'profile.mode': mode,
-          'profile.colorPalette': colorPalette,
           'isProfile': true,
         }
       })

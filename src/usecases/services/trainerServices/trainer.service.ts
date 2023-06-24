@@ -1,5 +1,3 @@
-import bcrypt from 'bcrypt';
-import { TokenUtils } from '../../utils/tokenUtils';
 import { ITrainerProfile } from '../../../app/entity/trainer.entity';
 
 export class TrainerService {
@@ -9,7 +7,6 @@ export class TrainerService {
 
   public async getTrainerInfo(trainerId: string){
     try{
-      console.log("getTrainerInfo 1")
       const trainerDetails = await this.trainerRepository.findByAuthId(trainerId);
       const isProfile = trainerDetails?.isProfile;
       const profileImage = trainerDetails?.profileImage?.url
@@ -47,7 +44,6 @@ export class TrainerService {
     try{
       const trainerInfo = await this.trainerRepository.findByAuthId(trainerId);
       const profileInfo = trainerInfo.profile
-      console.log("profileInfo : ", profileInfo)
       return {profileInfo};
     }catch(error){
       throw error

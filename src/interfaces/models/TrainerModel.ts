@@ -22,7 +22,6 @@ const trainerSchema = new Schema<ITrainer>({
     tags: [String],
     experience: Number,
     mode: [String],
-    colorPalette: String,
   },
   wallate: Number,
   profileImage: {

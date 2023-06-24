@@ -6,3 +6,7 @@ export interface ITrainerProfile {
     mode: string[];
     colorPalette: string;
 }
+
+export interface ITagArray{
+    tags: string[];
+}
