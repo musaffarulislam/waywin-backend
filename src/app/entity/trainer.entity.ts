@@ -4,7 +4,6 @@ export interface ITrainerProfile {
     tags: string[];
     experience: number;
     mode: string[];
-    colorPalette: string;
 }
 
 export interface ITagArray{

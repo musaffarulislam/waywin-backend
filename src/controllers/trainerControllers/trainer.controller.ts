@@ -18,6 +18,7 @@ export class TrainerController {
     public getTrainerInfo = async (req: CustomRequest, res: Response) => {
         try{
             const trainerId = req.trainer?.authId;
+            console.log("trainer id : ",trainerId)
             const trainerInfo = await this.trainerService.getTrainerInfo(trainerId);
             res.status(201).json(trainerInfo)
         }catch(error){
@@ -27,22 +28,12 @@ export class TrainerController {
 
     public createProfile = async (req: CustomRequest, res: Response) => {
         try{
-            const {services, description, tags, experience, mode, colorPalette} = req.body;
+            console.log(req.body)
+            const {services, description, tags, experience, mode} = req.body;
             const trainerId = req.trainer?.authId
-            const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode, colorPalette}
+            const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode}
             await this.trainerService.createProfile(trainerProfile, trainerId )
             res.status(201).json({ message: 'Trainer profile created successfully'})
-        }catch (error){
-            res.status(500).json({error: 'Internal server error'})
-        }
-    };
-
-    public uploadProfileImage = async (req: CustomRequest, res: Response) => {
-        try{
-            const { image } = req.body;
-            const trainerId = req.trainer?.authId
-            const profileImage = await this.trainerService.uploadProfileImage(image, trainerId )
-            res.status(201).json(profileImage)
         }catch (error){
             res.status(500).json({error: 'Internal server error'})
         }
@@ -57,4 +48,27 @@ export class TrainerController {
             res.status(400).json({error: "Something wrong"})
         }
     }
+    
+    public uploadProfileImage = async (req: CustomRequest, res: Response) => {
+        try{
+            const { image } = req.body;
+            const trainerId = req.trainer?.authId
+            const profileImage = await this.trainerService.uploadProfileImage(image, trainerId )
+            res.status(201).json(profileImage)
+        }catch (error){
+            res.status(500).json({error: 'Internal server error'})
+        }
+    };
+   
+    public uploadBannerImage = async (req: CustomRequest, res: Response) => {
+        try{
+            const { image } = req.body;
+            const trainerId = req.trainer?.authId
+            const bannerImage = await this.trainerService.uploadBannerImage(image, trainerId )
+            res.status(201).json(bannerImage)
+        }catch (error){
+            res.status(500).json({error: 'Internal server error'})
+        }
+    };
+
 }

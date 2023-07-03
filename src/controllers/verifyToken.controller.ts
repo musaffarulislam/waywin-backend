@@ -28,14 +28,12 @@ export class VerifyTokenController{
 
     public verifyRefreshToken = async (req: Request, res: Response) => {
         const { refreshToken } = req.body;
-        console.log("verfy refresh token :",refreshToken)
         const verifyToken = this.authService.verifyRefreshToken(refreshToken)
         if(!refreshToken || !verifyToken){
             console.log("No acces token")
             return res.status(403).json({ error: 'Invalid access token' })
         }
-        const accessToken = this.authService.generateAccessToken(verifyToken);
-        console.log("Verify Token : ",accessToken)
+        const accessToken = this.authService.generateAccessToken(verifyToken.authId);
         res.status(200).json(accessToken);
     }
 }

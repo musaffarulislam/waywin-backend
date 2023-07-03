@@ -11,7 +11,6 @@ export class TagController {
 
     public getTags = async (req: Request, res: Response) => {
         try{
-            console.log("Controller")
             const tags = await this.tagService.getTags();
             res.status(201).json(tags)
         }catch(error){

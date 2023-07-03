@@ -17,6 +17,8 @@ const trainerRouter = (dependency:any) => {
 
   router.post('/create-profile', trainerProfileValidator.validateProfileData, verifyToken.verifyAccessToken, trainerController.createProfile);
   router.post('/upload-profile-image',verifyToken.verifyAccessToken,trainerController.uploadProfileImage)
+  router.post('/upload-banner-image',verifyToken.verifyAccessToken,trainerController.uploadBannerImage)
+
   router.get('/getTrainer-profile', verifyToken.verifyAccessToken, trainerController.getTrainerProfile);
   
   router.get('/getTags', verifyToken.verifyAccessToken, tagController.getTags);

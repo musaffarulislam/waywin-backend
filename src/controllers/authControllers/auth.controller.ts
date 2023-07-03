@@ -26,7 +26,7 @@ export class AuthController {
       const tokens = await this.authService.login(email, password);
       res.status(200).json(tokens);
     } catch (error) {
-      res.status(401).json({ error: 'Invalid email or password' });
+      res.status(400).json({ error: 'Invalid email or password' });
     }
   };
 

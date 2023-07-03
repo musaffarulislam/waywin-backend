@@ -13,6 +13,14 @@ export class TokenUtils {
     return jwt.sign({ authId: authId }, this.refreshTokenSecret, { expiresIn: '7d' });
   };
 
+  public generateAccessTokenAdmin = (email: string) => {
+    return jwt.sign({ email: email }, this.accessTokenSecret, { expiresIn: '1d' });
+  };
+
+  public generateRefreshTokenAdmin = (email: string) => {
+    return jwt.sign({ email: email }, this.refreshTokenSecret, { expiresIn: '7d' });
+  };
+
   public verifyToken = (token: string, secret: string) => {
     return jwt.verify(token, secret);
   };

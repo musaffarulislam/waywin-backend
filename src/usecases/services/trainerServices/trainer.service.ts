@@ -22,9 +22,9 @@ export class TrainerService {
     }
   }
 
-  public async createProfile({services, description, tags, experience, mode, colorPalette}: ITrainerProfile, trainerId: string){
+  public async createProfile({services, description, tags, experience, mode}: ITrainerProfile, trainerId: string){
     try{
-      await this.trainerRepository.createTrainerProfile(trainerId,services, description, tags, experience, mode, colorPalette);
+      await this.trainerRepository.createTrainerProfile(trainerId,services, description, tags, experience, mode);
     }catch(error){
       throw error
     }
@@ -35,6 +35,16 @@ export class TrainerService {
       const trainer = await this.trainerRepository.uploadProfileImage(image,trainerId);
       const profileImage = trainer.profileImage?.url;
       return {profileImage}
+    }catch(error){
+      throw error 
+    }
+  }
+
+  public async uploadBannerImage(image: string, trainerId: string){
+    try{
+      const trainer = await this.trainerRepository.uploadBannerImage(image,trainerId);
+      const bannerImage = trainer.bannerImage?.url;
+      return {bannerImage}
     }catch(error){
       throw error 
     }

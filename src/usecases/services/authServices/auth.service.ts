@@ -14,20 +14,27 @@ export class AuthService {
     await this.authRepository.createUser(username, email, phoneNumber, role, hashedPassword);
   }
 
-  public async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string; role: string }> {
+  public async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string; role?: string }> {
     const auth = await this.authRepository.findByEmail(email);
     if (!auth) {
-      throw new Error('Invalid credentials');
+      if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        const accessToken = this.tokenUtils.generateAccessTokenAdmin(email);
+        const refreshToken = this.tokenUtils.generateRefreshTokenAdmin(email);
+        return { accessToken, refreshToken, role: "Admin"};
+      } else {
+        throw new Error('Invalid credentials');
+      }
+    } else {
+      const checkPassword = await bcrypt.compare(password, auth.password);
+      if (!checkPassword) {
+        throw new Error('Invalid credentials');
+      }
+      const accessToken = this.tokenUtils.generateAccessToken(auth);
+      const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
+      return { accessToken, refreshToken, role: auth.role };
     }
-    const checkPassword = await bcrypt.compare(password,auth.password)
-    if(!checkPassword){
-      throw new Error('Invalid credentials');
-    }
-    const accessToken = this.tokenUtils.generateAccessToken(auth._id);
-    const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
-    return { accessToken, refreshToken, role: auth.role };
   }
-
+  
   public verifyAccessToken(accessToken: string): Auth | null {
     try {
       const decodedToken = this.tokenUtils.verifyToken(accessToken, this.tokenUtils.accessTokenSecret);
@@ -41,6 +48,7 @@ export class AuthService {
   public verifyRefreshToken(refreshToken: string): Auth | null {
     try {
       const decodedToken = this.tokenUtils.verifyToken(refreshToken, this.tokenUtils.refreshTokenSecret);
+      console.log("decoded TOken : ",decodedToken)
       // Assuming AuthModel as the type of the decoded token
       return decodedToken as Auth;
     } catch (error) {
@@ -48,8 +56,8 @@ export class AuthService {
     }
   }
 
-  public generateAccessToken(verifyToken: any): { accessToken: string} {
-    const accessToken = this.tokenUtils.generateAccessToken(verifyToken.authId);
+  public generateAccessToken(authId: any): { accessToken: string} {
+    const accessToken = this.tokenUtils.generateAccessToken(authId);
     return { accessToken }
   }
 

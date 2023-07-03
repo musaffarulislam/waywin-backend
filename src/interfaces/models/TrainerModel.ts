@@ -10,6 +10,11 @@ export interface ITrainer extends Document {
     url: string;
   };
   isProfile: boolean;
+  bannerImage:{
+    public_id: string;
+    url: string;
+  };
+  isBanner: boolean;
   isVarified: boolean;
   status: boolean;
 }
@@ -29,6 +34,11 @@ const trainerSchema = new Schema<ITrainer>({
     url: {type: String, required: true},
   },
   isProfile: { type: Boolean, default: false},
+  bannerImage: {
+    public_id: {type: String, required: true},
+    url: {type: String, required: true},
+  },
+  isBanner: { type: Boolean, default: false},
   isVarified: { type: Boolean, default: false },
   status: { type: Boolean, default: true },
 }, { timestamps: true });

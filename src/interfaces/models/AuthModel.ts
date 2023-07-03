@@ -1,10 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 import { Auth } from '../../app/entity/auth.entity';
-import { IUser } from '../../app/entity/user.entity';
 import UserModel from '../../interfaces/models/UserModel';
 import TrainerModel from '../../interfaces/models/TrainerModel';
 
 export interface AuthModel extends Document, Auth{
+  _id: string;
   Auth: any;
 }
 

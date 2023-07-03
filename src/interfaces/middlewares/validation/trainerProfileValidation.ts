@@ -41,6 +41,7 @@ export class TrainerProfileValidator {
     public validateProfileData(req: Request, res: Response, next: NextFunction): any {
         const { error }: ValidationResult = TrainerProfileValidator.profileSchema.validate(req.body);
         if (error) {
+            
           return res.status(400).json({ message: error.details[0].message });
         }
     
@@ -52,7 +53,6 @@ export class TrainerProfileValidator {
         description: TrainerProfileValidator.descripitionSchema,
         tags: TrainerProfileValidator.tagsSchema,
         experience: TrainerProfileValidator.experienceSchema,
-        mode: TrainerProfileValidator.modeSchema,
-        colorPalette: TrainerProfileValidator.colorPaletteSchema,
+        mode: TrainerProfileValidator.modeSchema
     })
 }

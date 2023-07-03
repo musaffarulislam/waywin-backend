@@ -3,7 +3,7 @@ import cloudinary from '../config/cloudinary';
 
 export class TrainerRepositoryImpl { 
   
-  public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[], colorPalette: string): Promise<void> {
+  public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[]): Promise<void> {
     try {
       await TrainerModel.updateOne({authId: trainerId},
         {$set: {
@@ -40,6 +40,25 @@ export class TrainerRepositoryImpl {
       return await TrainerModel.findOneAndUpdate({authId: trainerId},
         {$set:{
           "profileImage" : imageBuffer
+        }
+      }, {new: true}); 
+    }catch (error){
+      throw new Error("Trainer not available")
+    }
+  }
+
+  public async uploadBannerImage(image: string, trainerId: string): Promise<ITrainer | null> {
+    try{
+      const result= await cloudinary.uploader.upload(image,{
+        folder:"bannerImage"
+      })
+      const imageBuffer = {
+          public_id:result.public_id,
+          url:result.secure_url
+        }
+      return await TrainerModel.findOneAndUpdate({authId: trainerId},
+        {$set:{
+          "bannerImage" : imageBuffer
         }
       }, {new: true}); 
     }catch (error){
