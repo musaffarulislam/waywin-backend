@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AdminApproveService } from '../../usecases/services/adminServices/admin.approve.service';
 import { Auth } from '../../app/entity/auth.entity';
 
-export class AdminController {
+export class AdminApproveController {
     private adminApproveService: AdminApproveService;
 
     constructor(private readonly dependency: any){
@@ -11,8 +11,9 @@ export class AdminController {
 
     public changeUserStatus = async (req: Request, res: Response) => {
         try{
-            const {userId} = req.body;
-            await this.adminApproveService.changeUserStatus(userId);      
+            const {authId} = req.body;
+            console.log("USer Id :", authId)
+            await this.adminApproveService.changeUserStatus(authId);      
             res.status(201).json({ message: "User status change is success" });
         }catch(error){
             res.status(400).json({ error: 'Internal server error'});

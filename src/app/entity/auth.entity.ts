@@ -6,4 +6,5 @@ export interface Auth {
     phoneNumber: string;
     role: string;
     password: string;
+    isActive?: boolean;
 }

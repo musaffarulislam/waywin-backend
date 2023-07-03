@@ -3,9 +3,10 @@ export class AdminApproveService {
     constructor(private readonly adminRepository: any) {
     }
 
-    public async changeUserStatus(userId: string){
+    public async changeUserStatus(authId: string){
         try{
-            await this.adminRepository.changeUserStatus(userId)
+            console.log("User Id 2 : ",authId)
+            await this.adminRepository.changeUserStatus(authId)
         }catch(error){
             throw error
         }
