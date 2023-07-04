@@ -2,6 +2,7 @@ import UserModel from "../models/UserModel";
 import TrainerModel from "../models/TrainerModel";
 
 export class AdminRepositoryImpl{
+    
     public async getAllUserInformation():Promise<any | null> {
         try{
             return await UserModel.find().populate('authId'); 

@@ -3,12 +3,15 @@ import AuthModel from "../models/AuthModel";
 import TrainerModel from "../models/TrainerModel";
 
 export class AdminApproveRepositoryImpl{
-    public async changeUserStatus(authId: string):Promise<void> {
+    public async changeAuthStatus(authId: string):Promise<void> {
         try{
             const auth = await AuthModel.findById(authId);
+            console.log("Auth :",auth)
             if (auth) {
                 const newActive = !auth.isActive;
                 await AuthModel.updateOne({ _id: authId }, { $set: { isActive: newActive } });
+                const auth2 = await AuthModel.findById(authId);
+                console.log("Auth :",auth2)
             } else {
                 throw new Error("Auth not found");
             }

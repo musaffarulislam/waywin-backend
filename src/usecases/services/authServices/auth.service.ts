@@ -48,7 +48,6 @@ export class AuthService {
   public verifyRefreshToken(refreshToken: string): Auth | null {
     try {
       const decodedToken = this.tokenUtils.verifyToken(refreshToken, this.tokenUtils.refreshTokenSecret);
-      console.log("decoded TOken : ",decodedToken)
       // Assuming AuthModel as the type of the decoded token
       return decodedToken as Auth;
     } catch (error) {

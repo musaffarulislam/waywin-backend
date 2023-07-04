@@ -18,7 +18,6 @@ export class TrainerController {
     public getTrainerInfo = async (req: CustomRequest, res: Response) => {
         try{
             const trainerId = req.trainer?.authId;
-            console.log("trainer id : ",trainerId)
             const trainerInfo = await this.trainerService.getTrainerInfo(trainerId);
             res.status(201).json(trainerInfo)
         }catch(error){

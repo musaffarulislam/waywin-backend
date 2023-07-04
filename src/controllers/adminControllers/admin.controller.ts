@@ -19,6 +19,26 @@ export class AdminController {
         }
     }
 
+    public getActiveUserInformation = async (req: Request, res: Response) => {
+        try{
+            const getActiveUser = await this.adminService.getActiveUserInformation();      
+            const users = getActiveUser.activeUsersInfo
+            res.status(201).json({ users });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
+    public getInactiveUserInformation = async (req: Request, res: Response) => {
+        try{
+            const getUnactiveUser = await this.adminService.getInactiveUserInformation();      
+            const users = getUnactiveUser.inactiveUsersInfo
+            res.status(201).json({ users });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
     public getAllTrainerInformation = async (req: Request, res: Response) => {
         try{
             const getAllTrainer = await this.adminService.getAllTrainerInformation();      
@@ -28,4 +48,25 @@ export class AdminController {
             res.status(500).json({ error: 'Internal server error'});
         }
     }
+
+    public getActiveTrainerInformation = async (req: Request, res: Response) => {
+        try{
+            const getActiveTrainer = await this.adminService.getActiveTrainerInformation();      
+            const trainers = getActiveTrainer.activeTrainersInfo
+            res.status(201).json({ trainers });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
+    public getInactiveTrainerInformation = async (req: Request, res: Response) => {
+        try{
+            const getUnactiveTrainer = await this.adminService.getInactiveTrainerInformation();      
+            const trainers = getUnactiveTrainer.inactiveTrainersInfo
+            res.status(201).json({ trainers });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
 }

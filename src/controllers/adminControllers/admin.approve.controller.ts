@@ -9,12 +9,21 @@ export class AdminApproveController {
         this.adminApproveService = new AdminApproveService(this.dependency)
     }
 
-    public changeUserStatus = async (req: Request, res: Response) => {
+    public changeAuthStatus = async (req: Request, res: Response) => {
         try{
             const {authId} = req.body;
-            console.log("USer Id :", authId)
-            await this.adminApproveService.changeUserStatus(authId);      
-            res.status(201).json({ message: "User status change is success" });
+            await this.adminApproveService.changeAuthStatus(authId);      
+            res.status(201).json({ message: "Auth status change is success" });
+        }catch(error){
+            res.status(400).json({ error: 'Internal server error'});
+        }
+    }
+
+    public changeTrainerStatus = async (req: Request, res: Response) => {
+        try{
+            const {authId} = req.body;
+            await this.adminApproveService.changeTrainerStatus(authId);      
+            res.status(201).json({ message: "Trainer status change is success" });
         }catch(error){
             res.status(400).json({ error: 'Internal server error'});
         }
