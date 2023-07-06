@@ -25,13 +25,17 @@ export class AuthService {
         throw new Error('Invalid credentials');
       }
     } else {
-      const checkPassword = await bcrypt.compare(password, auth.password);
-      if (!checkPassword) {
-        throw new Error('Invalid credentials');
+      if(auth.isActive){
+        const checkPassword = await bcrypt.compare(password, auth.password);
+        if (!checkPassword) {
+          throw new Error('Invalid credentials');
+        }
+        const accessToken = this.tokenUtils.generateAccessToken(auth._id);
+        const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
+        return { accessToken, refreshToken, role: auth.role };
+      }else {
+        throw new Error('This email suspended');
       }
-      const accessToken = this.tokenUtils.generateAccessToken(auth);
-      const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
-      return { accessToken, refreshToken, role: auth.role };
     }
   }
   
@@ -58,6 +62,21 @@ export class AuthService {
   public generateAccessToken(authId: any): { accessToken: string} {
     const accessToken = this.tokenUtils.generateAccessToken(authId);
     return { accessToken }
+  }
+  
+  public async getAuthInformation(authId: string){
+    try{
+      const authDetails = await this.authRepository.findByAuthId(authId);
+      const selectedAuthInfo = {
+        _id: authDetails?._id,
+        username: authDetails?.username,
+        email: authDetails?.email,
+        phoneNumber: authDetails?.phoneNumber,
+      };
+      return {authInfo: selectedAuthInfo};
+    }catch(error){
+      throw error
+    }
   }
 
   public async checkUsernameExist(username: string):  Promise<void> {

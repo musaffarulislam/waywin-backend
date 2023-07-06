@@ -61,12 +61,33 @@ export class AdminController {
 
     public getInactiveTrainerInformation = async (req: Request, res: Response) => {
         try{
-            const getUnactiveTrainer = await this.adminService.getInactiveTrainerInformation();      
-            const trainers = getUnactiveTrainer.inactiveTrainersInfo
+            const getInactiveTrainer = await this.adminService.getInactiveTrainerInformation();      
+            const trainers = getInactiveTrainer.inactiveTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
             res.status(500).json({ error: 'Internal server error'});
         }
     }
+
+    public getVerifyTrainerInformation = async (req: Request, res: Response) => {
+        try{
+            const getVerifyTrainer = await this.adminService.getVerifyTrainerInformation();      
+            const trainers = getVerifyTrainer.verifyTrainersInfo
+            res.status(201).json({ trainers });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
+    public getUnverifyTrainerInformation = async (req: Request, res: Response) => {
+        try{
+            const getUnverifyTrainer = await this.adminService.getUnverifyTrainerInformation();      
+            const trainers = getUnverifyTrainer.unverifyTrainersInfo
+            res.status(201).json({ trainers });
+        }catch(error){
+            res.status(500).json({ error: 'Internal server error'});
+        }
+    }
+
 
 }

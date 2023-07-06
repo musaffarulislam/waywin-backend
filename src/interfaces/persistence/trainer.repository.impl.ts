@@ -3,9 +3,9 @@ import cloudinary from '../config/cloudinary';
 
 export class TrainerRepositoryImpl { 
   
-  public async createTrainerProfile(trainerId: string, services: string[], description: string, tags: string[], experience: number, mode: string[]): Promise<void> {
+  public async createTrainerProfile(authId: string, services: string[], description: string, tags: string[], experience: number, mode: string[]): Promise<void> {
     try {
-      await TrainerModel.updateOne({authId: trainerId},
+      await TrainerModel.updateOne({authId: authId},
         {$set: {
           'profile.services': services,
           'profile.description': description,
@@ -28,7 +28,7 @@ export class TrainerRepositoryImpl {
     }
   }
 
-  public async uploadProfileImage(image: string, trainerId: string): Promise<ITrainer | null> {
+  public async uploadProfileImage(image: string, authId: string): Promise<ITrainer | null> {
     try{
       const result= await cloudinary.uploader.upload(image,{
         folder:"profileImage"
@@ -37,7 +37,7 @@ export class TrainerRepositoryImpl {
           public_id:result.public_id,
           url:result.secure_url
         }
-      return await TrainerModel.findOneAndUpdate({authId: trainerId},
+      return await TrainerModel.findOneAndUpdate({authId: authId},
         {$set:{
           "profileImage" : imageBuffer
         }
@@ -47,7 +47,7 @@ export class TrainerRepositoryImpl {
     }
   }
 
-  public async uploadBannerImage(image: string, trainerId: string): Promise<ITrainer | null> {
+  public async uploadBannerImage(image: string, authId: string): Promise<ITrainer | null> {
     try{
       const result= await cloudinary.uploader.upload(image,{
         folder:"bannerImage"
@@ -56,7 +56,7 @@ export class TrainerRepositoryImpl {
           public_id:result.public_id,
           url:result.secure_url
         }
-      return await TrainerModel.findOneAndUpdate({authId: trainerId},
+      return await TrainerModel.findOneAndUpdate({authId: authId},
         {$set:{
           "bannerImage" : imageBuffer
         }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { AuthController } from '../../controllers/authControllers/auth.controller';
+import { AuthController, AuthGetController } from '../../controllers/authControllers/auth.controller';
 import { AuthCheckVariable } from '../../controllers/authControllers/auth.check.variable';
 import { AuthValidator } from '../middlewares/validation/authValidation';
 import { VerifyTokenController } from '../../controllers/verifyToken.controller';
@@ -8,6 +8,7 @@ const router = express.Router();
 
 const authRouter = (dependency:any) => {
   const authController = new AuthController(dependency.authRepository);
+  const authGetController = new AuthGetController(dependency.authRepository);
   const authCheckVariable = new AuthCheckVariable(dependency.authRepository);
   const verifyToken = new VerifyTokenController(dependency.authRepository)
   const authValidator= new AuthValidator()
@@ -17,6 +18,7 @@ const authRouter = (dependency:any) => {
   router.post('/login', authValidator.validateLoginData, authController.login);
   router.post('/token', verifyToken.verifyRefreshToken);
 
+  router.get('/getAuth-info', verifyToken.verifyAccessToken,authGetController.getAuthInformation);
 
   router.get('/checkUsername/:username', authCheckVariable.checkUsernameExist);
   router.get('/checkEmail/:email', authCheckVariable.checkEmailExist);

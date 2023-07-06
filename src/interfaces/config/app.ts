@@ -6,9 +6,11 @@ import { connectToDatabase } from '../../interfaces/config/database';
 
 import authRouter from '../routers/auth.router';
 import trainerRouter from '../routers/trainer.router';
+import userRouter from '../routers/user.router';
 import adminRouter from '../routers/admin.router';
 import * as authRepository from '../..//app/repositories/auth.repository';
 import * as trainerRepository from '../../app/repositories/trainer.repository';
+import * as userRepository from '../../app/repositories/user.repository';
 import * as adminRepository from '../../app/repositories/admin.repository';
 
 class App {
@@ -36,6 +38,7 @@ class App {
     private routes(): void {
         this.app.use('/api/auth', authRouter(authRepository));
         this.app.use('/api/trainer', trainerRouter(trainerRepository));
+        this.app.use('/api/user', userRouter(userRepository));
         this.app.use('/api/admin', adminRouter(adminRepository));
     }
     

@@ -1,22 +1,25 @@
 export class AdminApproveService {
 
-    constructor(private readonly adminRepository: any) {
+    constructor(private readonly adminRepositoryApprove: any) {
     }
 
     public async changeAuthStatus(authId: string){
         try{
-            await this.adminRepository.changeAuthStatus(authId)
+            await this.adminRepositoryApprove.changeAuthStatus(authId)
         }catch(error){
             throw error
         }
     }
 
-    public async changeTrainerStatus(authId: string){
+    public async trainerVerify(trainerId: string){
         try{
-            await this.adminRepository.changeTrainerStatus(authId)
+            console.log("2",trainerId)
+            await this.adminRepositoryApprove.trainerVerify(trainerId)
         }catch(error){
             throw error
         }
     }
+
+
 
 }

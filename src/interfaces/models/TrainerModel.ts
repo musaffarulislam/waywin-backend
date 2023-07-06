@@ -15,7 +15,7 @@ export interface ITrainer extends Document {
     url: string;
   };
   isBanner: boolean;
-  isVarified: boolean;
+  isVerified: boolean;
 }
 
 const trainerSchema = new Schema<ITrainer>({
@@ -38,7 +38,7 @@ const trainerSchema = new Schema<ITrainer>({
     url: {type: String, required: true},
   },
   isBanner: { type: Boolean, default: false},
-  isVarified: { type: Boolean, default: false },
+  isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
 
 const TrainerModel: Model<ITrainer> = model<ITrainer>("Trainer", trainerSchema);

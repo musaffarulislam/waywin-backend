@@ -21,9 +21,11 @@ const trainerRouter = (dependency:any) => {
   router.get('/getAll-trainer-info', verifyToken.verifyAccessToken, adminController.getAllTrainerInformation);
   router.get('/getActive-trainer-info', verifyToken.verifyAccessToken, adminController.getActiveTrainerInformation);
   router.get('/getInactive-trainer-info', verifyToken.verifyAccessToken, adminController.getInactiveTrainerInformation);
+  router.get('/getVerify-trainer-info', verifyToken.verifyAccessToken, adminController.getVerifyTrainerInformation);
+  router.get('/getUnverify-trainer-info', verifyToken.verifyAccessToken, adminController.getUnverifyTrainerInformation);
 
   router.put('/change-auth-status', verifyToken.verifyAccessToken, adminApproveController.changeAuthStatus);
-  router.put('/change-trainer-status', verifyToken.verifyAccessToken, adminApproveController.changeTrainerStatus);
+  router.put('/trainer-verify', verifyToken.verifyAccessToken, adminApproveController.trainerVerify);
 
   return router;
 };

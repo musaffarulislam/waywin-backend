@@ -11,6 +11,14 @@ export class AuthRepositoryImpl {
     }
   }
 
+  public async findByAuthId(authId: string): Promise<Auth | null> {
+    try{
+      return await AuthModel.findById(authId);
+    }catch (error){
+      throw new Error("Auth not available")
+    }
+  }
+
   public async findByEmail(email: string): Promise<Auth | null> {  
     return AuthModel.findOne({ email }).exec();
   }

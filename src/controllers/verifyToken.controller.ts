@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../usecases/services/authServices/auth.service';
-import { ITrainer } from '../interfaces/models/TrainerModel';
+// import { ITrainer } from '../interfaces/models/TrainerModel';
 
 interface CustomRequest extends Request {
-    trainer?: ITrainer; // Add the 'trainer' property to the Request object
+    authId?: string; 
 }
 
 export class VerifyTokenController{
@@ -14,14 +14,14 @@ export class VerifyTokenController{
     }
 
 
-    public verifyAccessToken = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    public verifyAccessToken = async (req: CustomRequest, res: Response, next: NextFunction) => { 
         const accessToken: string | undefined = req.headers?.authorization?.split(" ")[1];
         const verifyToken: any = this.authService.verifyAccessToken(accessToken);
         if (!accessToken || !verifyToken) {
           console.log("No access token");
           return res.status(401).json({ error: 'Invalid access token' });
         }
-        req.trainer = verifyToken;
+        req.authId = verifyToken.authId;
         next();
     };
 

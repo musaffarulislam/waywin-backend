@@ -61,4 +61,24 @@ export class AdminService {
         }
     }
 
+    public async getVerifyTrainerInformation(){
+        try{
+            const allTrainersInfo = await this.adminRepository.getAllTrainerInformation()
+            const verifyTrainersInfo = allTrainersInfo.filter((trainer: any) => trainer.isVerified);
+            return {verifyTrainersInfo}
+        }catch(error){
+            throw error
+        }
+    }
+
+    public async getUnverifyTrainerInformation(){
+        try{
+            const allTrainersInfo = await this.adminRepository.getAllTrainerInformation()
+            const unverifyTrainersInfo = allTrainersInfo.filter((trainer: any) => !trainer.isVerified);
+            return {unverifyTrainersInfo}
+        }catch(error){
+            throw error
+        }
+    }
+
 }
