@@ -1,3 +1,4 @@
+import { ITrainerAvailableDate } from '../../app/entity/trainer.entity';
 import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
 import cloudinary from '../config/cloudinary';
 
@@ -63,6 +64,26 @@ export class TrainerRepositoryImpl {
       }, {new: true}); 
     }catch (error){
       throw new Error("Trainer not available")
+    }
+  }
+
+  public async addTrainerAvailableDate( date: ITrainerAvailableDate, authId: string,): Promise<void> {
+    try {
+      console.log("dates :", date)
+      const trainer = await TrainerModel.findOne({ authId: authId });
+      if (trainer) {
+        const existingDate = trainer.availableDates.find((d) => d.date.getTime() === date.date.getTime());
+        if (existingDate) {
+          existingDate.time = date.time;
+        } else {
+          trainer.availableDates.push(date);
+        }
+        await trainer.save();
+        const trainer2 = await TrainerModel.findOne({ authId: authId });
+        console.log("Trainer: ",trainer2.availableDates)
+      }
+    } catch (error) {
+      throw new Error('Failed to add dates.');
     }
   }
 

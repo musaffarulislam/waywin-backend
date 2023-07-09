@@ -15,7 +15,7 @@ export class AdminApproveController {
             await this.adminApproveService.changeAuthStatus(authId);      
             res.status(201).json({ message: "Auth status change is success" });
         }catch(error){
-            res.status(400).json({ error: 'Internal server error'});
+            res.status(400).json({ error: error.message });
         }
     }
   
@@ -26,7 +26,7 @@ export class AdminApproveController {
             await this.adminApproveService.trainerVerify(trainerId);      
             res.status(201).json({ message: "Trainer verified changed" });
         }catch(error){
-            res.status(400).json({ error: 'Internal server error'});
+            res.status(400).json({ error: error.message });
         }
     }
 

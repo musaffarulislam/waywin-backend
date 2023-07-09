@@ -6,6 +6,11 @@ export interface ITrainerProfile {
     mode: string[];
 }
 
+export interface ITrainerAvailableDate{
+    date: Date;
+    time: string[];
+}
+
 export interface ITagArray{
     tags: string[];
 }

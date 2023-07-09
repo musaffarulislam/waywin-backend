@@ -6,7 +6,7 @@ export class TagRepositoryImpl {
     try {
       return await TagModel.findOne()
     } catch (error) {
-      throw new Error('Failed to create user.');
+      throw new Error('Failed to find tags');
     }
   }
 

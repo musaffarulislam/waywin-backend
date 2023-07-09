@@ -24,8 +24,14 @@ const trainerRouter = (dependency:any) => {
   router.get('/getVerify-trainer-info', verifyToken.verifyAccessToken, adminController.getVerifyTrainerInformation);
   router.get('/getUnverify-trainer-info', verifyToken.verifyAccessToken, adminController.getUnverifyTrainerInformation);
 
+  router.get('/getAll-tags', verifyToken.verifyAccessToken, adminController.getAllTags);
+  router.put('/add-tag', verifyToken.verifyAccessToken, adminController.addTag);
+  router.put('/edit-tag', verifyToken.verifyAccessToken, adminController.editTag);
+  router.delete('/delete-tag/:index', verifyToken.verifyAccessToken, adminController.deleteTag);
+
   router.put('/change-auth-status', verifyToken.verifyAccessToken, adminApproveController.changeAuthStatus);
   router.put('/trainer-verify', verifyToken.verifyAccessToken, adminApproveController.trainerVerify);
+
 
   return router;
 };

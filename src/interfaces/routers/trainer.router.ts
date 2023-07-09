@@ -19,7 +19,10 @@ const trainerRouter = (dependency:any) => {
   router.post('/upload-profile-image',verifyToken.verifyAccessToken,trainerController.uploadProfileImage)
   router.post('/upload-banner-image',verifyToken.verifyAccessToken,trainerController.uploadBannerImage)
 
+  router.post('/add-available-date',verifyToken.verifyAccessToken,trainerController.addTrainerAvailableDate)
+
   router.get('/getTrainer-profile', verifyToken.verifyAccessToken, trainerController.getTrainerProfile);
+  router.get('/getTrainer-available-dates', verifyToken.verifyAccessToken, trainerController.getTrainerAvailableDate);
   
   router.get('/getTags', verifyToken.verifyAccessToken, tagController.getTags);
 

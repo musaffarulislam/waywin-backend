@@ -1,4 +1,4 @@
-import { ITrainerProfile } from '../../../app/entity/trainer.entity';
+import { ITrainerAvailableDate, ITrainerProfile } from '../../../app/entity/trainer.entity';
 
 export class TrainerService {
 
@@ -55,6 +55,25 @@ export class TrainerService {
       const trainerInfo = await this.trainerRepository.findByAuthId(authId);
       const profileInfo = trainerInfo.profile
       return {profileInfo};
+    }catch(error){
+      throw error
+    }
+  }
+
+  public async getTrainerAvailableDate(authId: string){
+    try{
+      const trainerInfo = await this.trainerRepository.findByAuthId(authId);
+      const availabeDates = trainerInfo.availableDates
+      return {availabeDates};
+    }catch(error){
+      throw error
+    }
+  }
+
+  public async addTrainerAvailableDate(date: ITrainerAvailableDate,authId: string){
+    try{
+      console.log(date)
+      await this.trainerRepository.addTrainerAvailableDate(date ,authId);
     }catch(error){
       throw error
     }

@@ -15,7 +15,7 @@ export class AdminController {
             const users = getAllUser.allUsersInfo
             res.status(201).json({ users });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -25,7 +25,7 @@ export class AdminController {
             const users = getActiveUser.activeUsersInfo
             res.status(201).json({ users });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -35,7 +35,7 @@ export class AdminController {
             const users = getUnactiveUser.inactiveUsersInfo
             res.status(201).json({ users });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -45,7 +45,7 @@ export class AdminController {
             const trainers = getAllTrainer.allTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -55,7 +55,7 @@ export class AdminController {
             const trainers = getActiveTrainer.activeTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -65,7 +65,7 @@ export class AdminController {
             const trainers = getInactiveTrainer.inactiveTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -75,7 +75,7 @@ export class AdminController {
             const trainers = getVerifyTrainer.verifyTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
@@ -85,9 +85,47 @@ export class AdminController {
             const trainers = getUnverifyTrainer.unverifyTrainersInfo
             res.status(201).json({ trainers });
         }catch(error){
-            res.status(500).json({ error: 'Internal server error'});
+            res.status(500).json({ error: error.message});
         }
     }
 
+    public getAllTags = async (req: Request, res: Response) => {
+        try{
+            const getAllTags = await this.adminService.getAllTags();      
+            const tags = getAllTags.tags
+            res.status(201).json({ tags });
+        }catch(error){
+            res.status(500).json({ error: error.message});
+        }
+    }
 
+    public addTag = async (req: Request, res: Response) => {
+        try{
+            const {addTag} = req.body;
+            await this.adminService.addTag(addTag);      
+            res.status(201).json({ message: "Tag added is success" });
+        }catch(error){
+            res.status(400).json({ error: error.message});
+        }
+    }
+
+    public editTag = async (req: Request, res: Response) => {
+        try{
+            const {index, tag} = req.body;
+            await this.adminService.editTag(index, tag);      
+            res.status(201).json({ message: "Tag edited is success" });
+        }catch(error){
+            res.status(400).json({ error: error.message});
+        }
+    }
+
+    public deleteTag = async (req: Request, res: Response) => {
+        try{
+            const index = req.params.index;
+            await this.adminService.deleteTag(Number(index));      
+            res.status(201).json({ message: "Tag delete is success" });
+        }catch(error){
+            res.status(400).json({ error: error.message});
+        }
+    }
 }

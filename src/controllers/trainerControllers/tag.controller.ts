@@ -14,7 +14,7 @@ export class TagController {
             const tags = await this.tagService.getTags();
             res.status(201).json(tags)
         }catch(error){
-            res.status(400).json({error: "Something wrong"})
+            res.status(400).json({ error: error.message })
         }
     }
 }

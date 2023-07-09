@@ -1,6 +1,6 @@
 import {Request, Response } from 'express';
 import { TrainerService } from '../../usecases/services/trainerServices/trainer.service';
-import { ITrainerProfile } from '../../app/entity/trainer.entity'
+import { ITrainerAvailableDate, ITrainerProfile } from '../../app/entity/trainer.entity'
 
 interface CustomRequest extends Request {
     authId: string;
@@ -32,19 +32,9 @@ export class TrainerController {
             await this.trainerService.createProfile(trainerProfile, authId )
             res.status(201).json({ message: 'Trainer profile created successfully'})
         }catch (error){
-            res.status(500).json({error: 'Internal server error'})
+            res.status(500).json({ error: error.message })
         }
     };
-
-    public getTrainerProfile = async (req: CustomRequest, res: Response) => {
-        try{
-            const authId = req.authId;
-            const profileInfo = await this.trainerService.getTrainerProfile(authId);
-            res.status(201).json(profileInfo)
-        }catch(error){
-            res.status(400).json({error: "Something wrong"})
-        }
-    }
     
     public uploadProfileImage = async (req: CustomRequest, res: Response) => {
         try{
@@ -53,10 +43,10 @@ export class TrainerController {
             const profileImage = await this.trainerService.uploadProfileImage(image, authId )
             res.status(201).json(profileImage)
         }catch (error){
-            res.status(500).json({error: 'Internal server error'})
+            res.status(500).json({ error: error.message })
         }
     };
-   
+    
     public uploadBannerImage = async (req: CustomRequest, res: Response) => {
         try{
             const { image } = req.body;
@@ -64,7 +54,41 @@ export class TrainerController {
             const bannerImage = await this.trainerService.uploadBannerImage(image, authId )
             res.status(201).json(bannerImage)
         }catch (error){
-            res.status(500).json({error: 'Internal server error'})
+            res.status(500).json({ error: error.message })
+        }
+    };
+    
+    public getTrainerProfile = async (req: CustomRequest, res: Response) => {
+        try{
+            const authId = req.authId;
+            const profileInfo = await this.trainerService.getTrainerProfile(authId);
+            res.status(201).json(profileInfo)
+        }catch(error){
+            res.status(400).json({ error: error.message })
+        }
+    }
+    
+    public getTrainerAvailableDate = async (req: CustomRequest, res: Response) => {
+        try{
+            const authId = req.authId;
+            const availabeDates = await this.trainerService.getTrainerAvailableDate(authId);
+            res.status(201).json(availabeDates)
+        }catch(error){
+            res.status(400).json({ error: error.message })
+        }
+    }
+    
+    public addTrainerAvailableDate = async (req: CustomRequest, res: Response) => {
+        try{
+            const { date, time } = req.body;
+            const authId = req.authId;
+            // const dateObj = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+            const dateInfo: ITrainerAvailableDate = {date:date, time}
+            console.log("date :",date)
+            await this.trainerService.addTrainerAvailableDate(dateInfo, authId )
+            res.status(201).json({ message: 'Trainer profile created success'})
+        }catch (error){
+            res.status(500).json({ error: error.message })
         }
     };
 

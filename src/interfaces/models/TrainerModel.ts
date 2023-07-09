@@ -14,7 +14,8 @@ export interface ITrainer extends Document {
     public_id: string;
     url: string;
   };
-  isBanner: boolean;
+  // isBanner: boolean;
+  availableDates: Array<{ date: Date; time: string[] }>;
   isVerified: boolean;
 }
 
@@ -37,9 +38,28 @@ const trainerSchema = new Schema<ITrainer>({
     public_id: {type: String, required: true},
     url: {type: String, required: true},
   },
-  isBanner: { type: Boolean, default: false},
+  availableDates: [
+    {
+      date: { type: Date, required: true },
+      time: [String],
+    },
+  ],
   isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
+
+
+// trainerSchema.pre<ITrainer>('save', function (next) {
+//   const currentDate = new Date();
+//   currentDate.setUTCHours(0, 0, 0, 0);
+//   this.availableDates = this.availableDates.filter((dateObj) => {
+//     const date = new Date(dateObj.date);
+//     date.setUTCHours(0, 0, 0, 0);
+//     return date >= currentDate;
+//   });
+
+//   next();
+// });
+
 
 const TrainerModel: Model<ITrainer> = model<ITrainer>("Trainer", trainerSchema);
 

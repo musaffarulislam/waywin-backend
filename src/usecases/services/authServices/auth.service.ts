@@ -15,27 +15,31 @@ export class AuthService {
   }
 
   public async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string; role?: string }> {
-    const auth = await this.authRepository.findByEmail(email);
-    if (!auth) {
-      if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-        const accessToken = this.tokenUtils.generateAccessTokenAdmin(email);
-        const refreshToken = this.tokenUtils.generateRefreshTokenAdmin(email);
-        return { accessToken, refreshToken, role: "Admin"};
-      } else {
-        throw new Error('Invalid credentials');
-      }
-    } else {
-      if(auth.isActive){
-        const checkPassword = await bcrypt.compare(password, auth.password);
-        if (!checkPassword) {
+    try{
+      const auth = await this.authRepository.findByEmail(email);
+      if (!auth) {
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+          const accessToken = this.tokenUtils.generateAccessTokenAdmin(email);
+          const refreshToken = this.tokenUtils.generateRefreshTokenAdmin(email);
+          return { accessToken, refreshToken, role: "Admin"};
+        } else {
           throw new Error('Invalid credentials');
         }
-        const accessToken = this.tokenUtils.generateAccessToken(auth._id);
-        const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
-        return { accessToken, refreshToken, role: auth.role };
-      }else {
-        throw new Error('This email suspended');
+      } else {
+        if(auth.isActive){
+          const checkPassword = await bcrypt.compare(password, auth.password);
+          if (!checkPassword) {
+            throw new Error('Invalid credentials');
+          }
+          const accessToken = this.tokenUtils.generateAccessToken(auth._id);
+          const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
+          return { accessToken, refreshToken, role: auth.role };
+        }else {
+          throw new Error('This email suspended');
+        }
       }
+    }catch(error){
+      throw error
     }
   }
   

@@ -81,4 +81,37 @@ export class AdminService {
         }
     }
 
+    public async getAllTags(){
+        try{
+            const tags = await this.adminRepository.getAllTags();
+            return {tags: tags.tags}
+        }catch(error){
+            throw error
+        }
+    }
+
+    public async addTag(tag: string){
+        try{
+            await this.adminRepository.addTag(tag)
+        }catch(error){
+            throw error
+        }
+    }
+
+    public async editTag(index: number, tag: string){
+        try{
+            await this.adminRepository.editTag(index, tag)
+        }catch(error){
+            throw error
+        }
+    }
+
+    public async deleteTag(index: number){
+        try{
+            await this.adminRepository.deleteTag(index)
+        }catch(error){
+            throw error
+        }
+    }
+
 }
