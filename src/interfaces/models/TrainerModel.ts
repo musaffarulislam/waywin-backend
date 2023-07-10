@@ -1,10 +1,11 @@
 import { Document, Schema, Model, model } from "mongoose";
-import { ITrainerProfile } from "../../app/entity/trainer.entity";
+import { ITrainerFee, ITrainerProfile } from "../../app/entity/trainer.entity";
 
 export interface ITrainer extends Document {
   authId: Schema.Types.ObjectId;
   profile: ITrainerProfile;
   wallate: number;
+  fee : ITrainerFee;
   profileImage:{
     public_id: string;
     url: string;
@@ -29,6 +30,10 @@ const trainerSchema = new Schema<ITrainer>({
     mode: [String],
   },
   wallate: Number,
+  fee: {
+    consultingFee: {type: Number, required: true},
+    trainingFee: {type: Number, required: true},
+  },
   profileImage: {
     public_id: {type: String, required: true},
     url: {type: String, required: true},

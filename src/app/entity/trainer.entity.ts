@@ -6,6 +6,11 @@ export interface ITrainerProfile {
     mode: string[];
 }
 
+export interface ITrainerFee {
+    consultingFee: number,
+    trainingFee: number,
+}
+
 export interface ITrainerAvailableDate{
     date: Date;
     time: string[];

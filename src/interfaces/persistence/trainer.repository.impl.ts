@@ -17,7 +17,20 @@ export class TrainerRepositoryImpl {
         }
       })
     } catch (error) {
-      throw new Error('Failed to create user.');
+      throw new Error('Failed to create trainer');
+    }
+  }
+
+  public async addTrainerFee(authId: string, consultingFee: number, trainingFee: number): Promise<void> {
+    try {
+      await TrainerModel.updateOne({authId: authId},
+        {$set: {
+          'fee.consultingFee': consultingFee,
+          'fee.trainingFee': trainingFee,
+        }
+      })
+    } catch (error) {
+      throw new Error('Failed to add fee trainer');
     }
   }
 
@@ -69,10 +82,10 @@ export class TrainerRepositoryImpl {
 
   public async addTrainerAvailableDate( date: ITrainerAvailableDate, authId: string,): Promise<void> {
     try {
-      console.log("dates :", date)
       const trainer = await TrainerModel.findOne({ authId: authId });
       if (trainer) {
-        const existingDate = trainer.availableDates.find((d) => d.date.getTime() === date.date.getTime());
+        const existingDate = trainer.availableDates.find((d) => new Date(d.date).getTime() === new Date(date.date).getTime());
+        console.log("trainer is there")
         if (existingDate) {
           existingDate.time = date.time;
         } else {
@@ -83,9 +96,9 @@ export class TrainerRepositoryImpl {
         console.log("Trainer: ",trainer2.availableDates)
       }
     } catch (error) {
+      console.log(error.message)
       throw new Error('Failed to add dates.');
     }
   }
-
 
 }

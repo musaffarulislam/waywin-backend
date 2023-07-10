@@ -1,4 +1,4 @@
-import { ITrainerAvailableDate, ITrainerProfile } from '../../../app/entity/trainer.entity';
+import { ITrainerAvailableDate, ITrainerFee, ITrainerProfile } from '../../../app/entity/trainer.entity';
 
 export class TrainerService {
 
@@ -16,7 +16,8 @@ export class TrainerService {
         email: trainerDetails?.authId?.email,
         phoneNumber: trainerDetails?.authId?.phoneNumber,
       };
-      return {trainerInfo: selectedAuthInfo, isProfile, profileImage};
+      const fee = trainerDetails?.fee
+      return {trainerInfo: selectedAuthInfo, isProfile, profileImage, fee};
     }catch(error){
       throw error
     }
@@ -25,6 +26,14 @@ export class TrainerService {
   public async createProfile({services, description, tags, experience, mode}: ITrainerProfile, authId: string){
     try{
       await this.trainerRepository.createTrainerProfile(authId,services, description, tags, experience, mode);
+    }catch(error){
+      throw error
+    }
+  }
+
+  public async addTrainerFee({consultingFee, trainingFee}: ITrainerFee, authId: string){
+    try{
+      await this.trainerRepository.addTrainerFee(authId,consultingFee, trainingFee);
     }catch(error){
       throw error
     }
@@ -72,7 +81,7 @@ export class TrainerService {
 
   public async addTrainerAvailableDate(date: ITrainerAvailableDate,authId: string){
     try{
-      console.log(date)
+      console.log("date service :", date)
       await this.trainerRepository.addTrainerAvailableDate(date ,authId);
     }catch(error){
       throw error

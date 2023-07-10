@@ -1,6 +1,6 @@
 import {Request, Response } from 'express';
 import { TrainerService } from '../../usecases/services/trainerServices/trainer.service';
-import { ITrainerAvailableDate, ITrainerProfile } from '../../app/entity/trainer.entity'
+import { ITrainerAvailableDate, ITrainerFee, ITrainerProfile } from '../../app/entity/trainer.entity'
 
 interface CustomRequest extends Request {
     authId: string;
@@ -31,6 +31,19 @@ export class TrainerController {
             const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode}
             await this.trainerService.createProfile(trainerProfile, authId )
             res.status(201).json({ message: 'Trainer profile created successfully'})
+        }catch (error){
+            res.status(500).json({ error: error.message })
+        }
+    };
+
+    public addTrainerFee = async (req: CustomRequest, res: Response) => {
+        try{
+            console.log(req.body)
+            const {consultingFee, trainingFee} = req.body;
+            const authId = req.authId
+            const trainerFee: ITrainerFee = {consultingFee, trainingFee}
+            await this.trainerService.addTrainerFee(trainerFee, authId )
+            res.status(201).json({ message: 'Trainer fee added successfully'})
         }catch (error){
             res.status(500).json({ error: error.message })
         }

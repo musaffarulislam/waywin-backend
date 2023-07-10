@@ -32,11 +32,6 @@ export class TrainerProfileValidator {
         'any.required': 'Mode is required',
     });
 
-    private static colorPaletteSchema: Schema = Joi.string().required().messages({
-        'string.base': 'Color palette must be a string',
-        'any.required': 'Color palette is required',
-    });
-
 
     public validateProfileData(req: Request, res: Response, next: NextFunction): any {
         const { error }: ValidationResult = TrainerProfileValidator.profileSchema.validate(req.body);
