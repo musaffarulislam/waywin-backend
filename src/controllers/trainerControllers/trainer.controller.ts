@@ -97,7 +97,6 @@ export class TrainerController {
             const authId = req.authId;
             // const dateObj = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
             const dateInfo: ITrainerAvailableDate = {date:date, time}
-            console.log("date :",date)
             await this.trainerService.addTrainerAvailableDate(dateInfo, authId )
             res.status(201).json({ message: 'Trainer profile created success'})
         }catch (error){

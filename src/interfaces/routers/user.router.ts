@@ -11,6 +11,8 @@ const userRouter = (dependency:any) => {
 
   
   router.get('/getAll-trainer-info', userController.getAllTrainerInfo);
+  
+  router.post('/book-trainer', verifyToken.verifyAccessToken, userController.bookingTrainer);
 
 
   return router;

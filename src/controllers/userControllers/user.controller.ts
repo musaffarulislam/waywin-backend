@@ -23,4 +23,17 @@ export class UserController {
         }
     }
 
+    public bookingTrainer = async (req: CustomRequest, res: Response) => {
+        try{
+            const { bookingData, trainerId} = req.body;
+            const authId = req.authId
+            console.log(req.body)
+            console.log("booking data : ",bookingData)
+            await this.userService.bookingTrainer(bookingdata, trainerId, authId )
+            res.status(201).json({ message: 'Trainer booking successfully'})
+        }catch (error){
+            res.status(500).json({ error: error.message })
+        }
+    };
+
 }
