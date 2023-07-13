@@ -1,6 +1,7 @@
 import { ITrainerAvailableDate } from '../../app/entity/trainer.entity';
 import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
 import cloudinary from '../config/cloudinary';
+import BookingModel from '../models/BookingModel';
 
 export class TrainerRepositoryImpl { 
   
@@ -98,6 +99,17 @@ export class TrainerRepositoryImpl {
     } catch (error) {
       console.log(error.message)
       throw new Error('Failed to add dates.');
+    }
+  }
+
+  public async getBookingInformation(authId: string):Promise<any | null> {
+    try{
+      const booking = await BookingModel.find({trainerId: authId})
+      console.log("authId : ",authId)
+      console.log("Booking : ",booking)
+      return await BookingModel.find({trainerId: authId}).populate('userId').populate('trainerId'); 
+    }catch (error){
+      throw new Error("Trainer not available")
     }
   }
 

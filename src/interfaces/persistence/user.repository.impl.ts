@@ -29,12 +29,12 @@ export class UserRepositoryImpl{
       }
 
     
-      public async getBookingInformation(authId: string):Promise<any | null> {
-        try{
-            return await BookingModel.find({userId: authId}).populate('trainerId'); 
-        }catch (error){
-            throw new Error("Trainer not available")
-        }
+    public async getBookingInformation(authId: string):Promise<any | null> {
+      try{
+        return await BookingModel.find({userId: authId}).populate('trainerId').populate({path: 'trainerId', populate: {path: 'authId'}}); 
+      }catch (error){
+        throw new Error("Trainer not available")
+      }
     }
 
     public async bookingTrainer(bookingData: IBooking, trainerId: string, bookingId: string, authId: string): Promise<void> {

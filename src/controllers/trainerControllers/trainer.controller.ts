@@ -104,4 +104,14 @@ export class TrainerController {
         }
     };
 
+    public getBookingInformation = async (req: CustomRequest, res: Response) => {
+        try{
+            const authId = req.authId
+            const bookings = await this.trainerService.getBookingInformation(authId)
+            res.status(201).json({ bookings })
+        }catch (error){
+            res.status(500).json({ error: error.message })
+        }
+    };
+
 }

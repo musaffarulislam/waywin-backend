@@ -87,5 +87,13 @@ export class TrainerService {
       throw error
     }
   }
+  
+  public async getBookingInformation(authId: string){
+    try{
+      return await this.trainerRepository.getBookingInformation(authId); 
+    }catch(error){
+      throw error
+    }
+  }
 
 }

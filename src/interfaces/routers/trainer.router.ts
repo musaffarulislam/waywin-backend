@@ -26,6 +26,8 @@ const trainerRouter = (dependency:any) => {
 
   router.get('/getTrainer-profile', verifyToken.verifyAccessToken, trainerController.getTrainerProfile);
   router.get('/getTrainer-available-dates', verifyToken.verifyAccessToken, trainerController.getTrainerAvailableDate);
+
+  router.get('/get-booking-info', verifyToken.verifyAccessToken, trainerController.getBookingInformation);
   
   router.get('/getTags', verifyToken.verifyAccessToken, tagController.getTags);
 
