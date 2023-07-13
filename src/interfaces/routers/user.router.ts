@@ -11,7 +11,11 @@ const userRouter = (dependency:any) => {
 
   
   router.get('/getAll-trainer-info', userController.getAllTrainerInfo);
+  router.get('/get-trainer-info/:trainerId', userController.getTrainerInfo);
   
+  router.get('/get-booking-info', userController.getBookingInformation);
+
+  router.post('/booking', verifyToken.verifyAccessToken, userController.booking);
   router.post('/book-trainer', verifyToken.verifyAccessToken, userController.bookingTrainer);
 
 

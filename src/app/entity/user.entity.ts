@@ -4,6 +4,9 @@ export interface IUser {
 }
 
 export interface IBooking {
+    bookingId: string;
+    authId: string;
+    trainerId: string;
     service: string;
     mode: string;
     fee: number;
