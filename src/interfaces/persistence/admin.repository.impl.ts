@@ -1,6 +1,7 @@
 import UserModel from "../models/UserModel";
 import TrainerModel from "../models/TrainerModel";
 import TagsModel from "../models/TagModel";
+import BookingModel from "../models/BookingModel";
 
 interface ITagArray extends Array<string> {
     [index: number]: string;
@@ -37,8 +38,7 @@ export class AdminRepositoryImpl{
         if (tags) {
             const tagArray: any = tags.tags;
             tagArray.push(tag)
-            await tags.save(); 
-            console.log("Add tags:", tags.tags);
+            await tags.save();  
         } else {
             throw new Error("Tags not found");
         }
@@ -61,15 +61,22 @@ export class AdminRepositoryImpl{
             const tagArray: any = tags.tags;
             if (index >= 0 && index < tagArray.length) {
               tagArray.splice(index, 1); 
-              await tags.save(); 
-              console.log("index tags:", index);
-              console.log("Updated tags:", tags.tags);
+              await tags.save();  
             } else {
               throw new Error("Invalid index");
             }
        
         } else {
             throw new Error("Tags not found");
+        }
+    }
+
+
+    public async getAllBookings():Promise<any | null> {
+        try{
+            return await BookingModel.find().populate("userId").populate({path: 'trainerId', populate: {path: 'authId'}}) 
+        }catch (error){
+            throw new Error("Trainer not available")
         }
     }
 

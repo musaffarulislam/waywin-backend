@@ -85,29 +85,24 @@ export class TrainerRepositoryImpl {
     try {
       const trainer = await TrainerModel.findOne({ authId: authId });
       if (trainer) {
-        const existingDate = trainer.availableDates.find((d) => new Date(d.date).getTime() === new Date(date.date).getTime());
-        console.log("trainer is there")
+        const existingDate = trainer.availableDates.find((d) => new Date(d.date).getTime() === new Date(date.date).getTime()); 
         if (existingDate) {
           existingDate.time = date.time;
         } else {
           trainer.availableDates.push(date);
         }
         await trainer.save();
-        const trainer2 = await TrainerModel.findOne({ authId: authId });
-        console.log("Trainer: ",trainer2.availableDates)
+        const trainer2 = await TrainerModel.findOne({ authId: authId }); 
       }
-    } catch (error) {
-      console.log(error.message)
+    } catch (error) { 
       throw new Error('Failed to add dates.');
     }
   }
 
   public async getBookingInformation(authId: string):Promise<any | null> {
     try{
-      const booking = await BookingModel.find({trainerId: authId})
-      console.log("authId : ",authId)
-      console.log("Booking : ",booking)
-      return await BookingModel.find({trainerId: authId}).populate('userId').populate('trainerId'); 
+      const trainerInfo = await TrainerModel.findOne({authId})
+      return await BookingModel.find({trainerId: trainerInfo._id}).populate("userId").populate({path: 'trainerId', populate: {path: 'authId'}})
     }catch (error){
       throw new Error("Trainer not available")
     }

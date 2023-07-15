@@ -50,8 +50,7 @@ export class UserRepositoryImpl{
             time: bookingData.time,
            });
           await booking.save();
-        } catch (error) {
-          console.log("Error : ",error)
+        } catch (error) { 
           throw new Error('Failed to create user.');
         }
       }

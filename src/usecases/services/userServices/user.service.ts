@@ -43,7 +43,7 @@ export class UserService {
 
       const option = {
         receipt: bookingId,
-        amount: amount * 100,
+        amount: amount*100,
         currency: "INR",
         payment_capture: 1
       }
@@ -74,9 +74,7 @@ export class UserService {
 
       if (!order) {
         throw new Error('Payment somthing wrong');
-      }
-  
-      console.log("order :",order)
+      } 
 
       if (order.status === "paid") {
         await this.userRepository.bookingTrainer(bookingData, trainerId, bookingId, authId);

@@ -4,8 +4,7 @@ export class TagService {
     }
 
     public async getTags(){
-        try{
-        console.log("Services")
+        try{ 
         const tagsModel = await this.tagRepository.findTags();
         const tags = tagsModel.tags;
         return {tags};

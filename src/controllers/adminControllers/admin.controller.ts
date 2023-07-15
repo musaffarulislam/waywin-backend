@@ -128,4 +128,13 @@ export class AdminController {
             res.status(400).json({ error: error.message});
         }
     }
+
+    public getAllBookings = async (req: Request, res: Response) => {
+        try{
+            const bookings = await this.adminService.getAllBookings();       
+            res.status(201).json({ bookings });
+        }catch(error){
+            res.status(500).json({ error: error.message});
+        }
+    }
 }

@@ -14,7 +14,7 @@ export interface IBooking extends Document {
 const bookingSchema = new Schema<IBooking>({
     bookingId: { type: String, require: true },
     userId: { type: Schema.Types.ObjectId, ref: "Auth" },
-    trainerId: { type: Schema.Types.ObjectId, ref: "Auth"},
+    trainerId: { type: Schema.Types.ObjectId, ref: "Trainer"},
     service: { type: String, require: true },
     mode: { type: String, require: true },
     fee: { type: Number, require: true },

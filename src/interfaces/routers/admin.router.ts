@@ -29,6 +29,8 @@ const trainerRouter = (dependency:any) => {
   router.put('/edit-tag', verifyToken.verifyAccessToken, adminController.editTag);
   router.delete('/delete-tag/:index', verifyToken.verifyAccessToken, adminController.deleteTag);
 
+  router.get('/getAll-bookings', verifyToken.verifyAccessToken, adminController.getAllBookings);
+
   router.put('/change-auth-status', verifyToken.verifyAccessToken, adminApproveController.changeAuthStatus);
   router.put('/trainer-verify', verifyToken.verifyAccessToken, adminApproveController.trainerVerify);
 

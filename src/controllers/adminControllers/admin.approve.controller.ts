@@ -21,8 +21,7 @@ export class AdminApproveController {
   
     public trainerVerify = async (req: Request, res: Response) => {
         try{
-            const {trainerId} = req.body;
-            console.log("1",trainerId)
+            const {trainerId} = req.body; 
             await this.adminApproveService.trainerVerify(trainerId);      
             res.status(201).json({ message: "Trainer verified changed" });
         }catch(error){

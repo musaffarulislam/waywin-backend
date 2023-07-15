@@ -114,4 +114,12 @@ export class AdminService {
         }
     }
 
+    public async getAllBookings(){
+        try{
+            return await this.adminRepository.getAllBookings(); 
+        }catch(error){
+            throw error
+        }
+    }
+
 }

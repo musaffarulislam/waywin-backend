@@ -24,8 +24,7 @@ export class TrainerController {
     }
 
     public createProfile = async (req: CustomRequest, res: Response) => {
-        try{
-            console.log(req.body)
+        try{ 
             const {services, description, tags, experience, mode} = req.body;
             const authId = req.authId
             const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode}
@@ -37,8 +36,7 @@ export class TrainerController {
     };
 
     public addTrainerFee = async (req: CustomRequest, res: Response) => {
-        try{
-            console.log(req.body)
+        try{ 
             const {consultingFee, trainingFee} = req.body;
             const authId = req.authId
             const trainerFee: ITrainerFee = {consultingFee, trainingFee}

@@ -80,8 +80,7 @@ export class TrainerService {
   }
 
   public async addTrainerAvailableDate(date: ITrainerAvailableDate,authId: string){
-    try{
-      console.log("date service :", date)
+    try{ 
       await this.trainerRepository.addTrainerAvailableDate(date ,authId);
     }catch(error){
       throw error
