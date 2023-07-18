@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { AuthService } from '../usecases/services/authServices/auth.service';
-// import { ITrainer } from '../interfaces/models/TrainerModel';
+import { Request, Response, NextFunction } from "express";
+import { AuthService } from "../usecases/services/authServices/auth.service";
+// import { ITrainer } from "../interfaces/models/TrainerModel";
 
 interface CustomRequest extends Request {
     authId?: string; 
@@ -19,7 +19,7 @@ export class VerifyTokenController{
         const verifyToken: any = this.authService.verifyAccessToken(accessToken);
         if (!accessToken || !verifyToken) {
           console.log("No access token");
-          return res.status(401).json({ error: 'Invalid access token' });
+          return res.status(401).json({ error: "Invalid access token" });
         }
         req.authId = verifyToken.authId;
         next();
@@ -31,7 +31,7 @@ export class VerifyTokenController{
         const verifyToken = this.authService.verifyRefreshToken(refreshToken)
         if(!refreshToken || !verifyToken){
             console.log("No acces token")
-            return res.status(403).json({ error: 'Invalid access token' })
+            return res.status(403).json({ error: "Invalid access token" })
         }
         const accessToken = this.authService.generateAccessToken(verifyToken.authId);
         res.status(200).json(accessToken);

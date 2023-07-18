@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import env from "../../app/environment/environment";
 
 const dbname: String = env.getDBName();
-const MONGODB_URI: string = process.env.MONGO_URI+'/'+dbname;
+const MONGODB_URI: string = process.env.MONGO_URI+"/"+dbname;
 
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -13,9 +13,9 @@ const mongooseOptions = {
 export const connectToDatabase = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGODB_URI, mongooseOptions)
-    console.log('Connected to database',MONGODB_URI);
+    console.log("Connected to database",MONGODB_URI);
   } catch (error) {
-    console.error('Failed to connect to database:', error);
+    console.error("Failed to connect to database:", error);
     process.exit(1);
   }
 };

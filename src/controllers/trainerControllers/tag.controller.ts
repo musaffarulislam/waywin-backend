@@ -1,6 +1,6 @@
-import {Request, Response } from 'express';
-import { TagService } from '../../usecases/services/trainerServices/tag.service';
-import { ITagArray } from '../../app/entity/trainer.entity'
+import {Request, Response } from "express";
+import { TagService } from "../../usecases/services/trainerServices/tag.service";
+import { ITagArray } from "../../app/entity/trainer.entity"
 
 export class TagController {
     private tagService: TagService;

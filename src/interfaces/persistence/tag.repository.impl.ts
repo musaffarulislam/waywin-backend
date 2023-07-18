@@ -1,4 +1,4 @@
-import TagModel, {ITags} from '../models/TagModel';
+import TagModel, {ITags} from "../models/TagModel";
 
 export class TagRepositoryImpl { 
   
@@ -6,7 +6,7 @@ export class TagRepositoryImpl {
     try {
       return await TagModel.findOne()
     } catch (error) {
-      throw new Error('Failed to find tags');
+      throw new Error("Failed to find tags");
     }
   }
 

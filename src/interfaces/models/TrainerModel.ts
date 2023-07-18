@@ -53,7 +53,7 @@ const trainerSchema = new Schema<ITrainer>({
 }, { timestamps: true });
 
 
-// trainerSchema.pre<ITrainer>('save', function (next) {
+// trainerSchema.pre<ITrainer>("save", function (next) {
 //   const currentDate = new Date();
 //   currentDate.setUTCHours(0, 0, 0, 0);
 //   this.availableDates = this.availableDates.filter((dateObj) => {

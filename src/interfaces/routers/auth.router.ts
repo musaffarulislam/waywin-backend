@@ -1,8 +1,8 @@
-import express from 'express';
-import { AuthController, AuthGetController } from '../../controllers/authControllers/auth.controller';
-import { AuthCheckVariable } from '../../controllers/authControllers/auth.check.variable';
-import { AuthValidator } from '../middlewares/validation/authValidation';
-import { VerifyTokenController } from '../../controllers/verifyToken.controller';
+import express from "express";
+import { AuthController, AuthGetController } from "../../controllers/authControllers/auth.controller";
+import { AuthCheckVariable } from "../../controllers/authControllers/auth.check.variable";
+import { AuthValidator } from "../middlewares/validation/authValidation";
+import { VerifyTokenController } from "../../controllers/verifyToken.controller";
 
 const router = express.Router();
 
@@ -14,17 +14,17 @@ const authRouter = (dependency:any) => {
   const authValidator= new AuthValidator()
 
   
-  router.post('/signup', authValidator.validateSignupData, authController.signup);
-  router.post('/login', authValidator.validateLoginData, authController.login);
-  router.post('/token', verifyToken.verifyRefreshToken);
+  router.post("/signup", authValidator.validateSignupData, authController.signup);
+  router.post("/login", authValidator.validateLoginData, authController.login);
+  router.post("/token", verifyToken.verifyRefreshToken);
 
-  router.get('/getAuth-info', verifyToken.verifyAccessToken,authGetController.getAuthInformation);
+  router.get("/getAuth-info", verifyToken.verifyAccessToken,authGetController.getAuthInformation);
 
-  router.get('/checkUsername/:username', authCheckVariable.checkUsernameExist);
-  router.get('/checkEmail/:email', authCheckVariable.checkEmailExist);
-  router.get('/checkPhoneNumber/:phoneNumber', authCheckVariable.checkPhoneNumberExist);
+  router.get("/checkUsername/:username", authCheckVariable.checkUsernameExist);
+  router.get("/checkEmail/:email", authCheckVariable.checkEmailExist);
+  router.get("/checkPhoneNumber/:phoneNumber", authCheckVariable.checkPhoneNumberExist);
 
-  router.post('/update-username', authCheckVariable.checkPhoneNumberExist);
+  router.post("/update-username", authCheckVariable.checkPhoneNumberExist);
   
   return router;
 };

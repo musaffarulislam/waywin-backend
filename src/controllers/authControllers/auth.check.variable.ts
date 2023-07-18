@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { AuthService } from '../../usecases/services/authServices/auth.service';
-import { Auth } from '../../app/entity/auth.entity';
+import { Request, Response } from "express";
+import { AuthService } from "../../usecases/services/authServices/auth.service";
+import { Auth } from "../../app/entity/auth.entity";
 
 export class AuthCheckVariable {
   private authService: AuthService;
@@ -15,7 +15,7 @@ export class AuthCheckVariable {
       await this.authService.checkUsernameExist(username);
       res.status(200).json({message: "Username not registerd"})
     } catch (error) {
-      res.status(400).json({ error: 'Username already exist' });
+      res.status(400).json({ error: "Username already exist" });
     }
   };
 
@@ -26,7 +26,7 @@ export class AuthCheckVariable {
       await this.authService.checkEmailExist(email);
       res.status(200).json({message: "Email not registerd"})
     } catch (error) {
-      res.status(400).json({ error: 'Email already exist' });
+      res.status(400).json({ error: "Email already exist" });
     }
   };
 
@@ -37,7 +37,7 @@ export class AuthCheckVariable {
       await this.authService.checkPhoneNumberExist(phoneNumberAsNumber);
       res.status(200).json({message: "Phone number not registerd"})
     } catch (error) {
-      res.status(400).json({ error: 'Phone number already exist' });
+      res.status(400).json({ error: "Phone number already exist" });
     }
   };
 }

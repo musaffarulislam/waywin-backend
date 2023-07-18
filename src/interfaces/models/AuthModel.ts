@@ -1,7 +1,7 @@
-import mongoose, { Document } from 'mongoose';
-import { Auth } from '../../app/entity/auth.entity';
-import UserModel from '../../interfaces/models/UserModel';
-import TrainerModel from '../../interfaces/models/TrainerModel';
+import mongoose, { Document } from "mongoose";
+import { Auth } from "../../app/entity/auth.entity";
+import UserModel from "../../interfaces/models/UserModel";
+import TrainerModel from "../../interfaces/models/TrainerModel";
 
 export interface AuthModel extends Document, Auth{
   _id: string;
@@ -17,15 +17,15 @@ const authSchema = new mongoose.Schema<Auth>({
   isActive: {type: Boolean, default: true},
 },{timestamps: true});
 
-authSchema.post<AuthModel>('save', async function (doc) {
-  if (doc.role === 'User') {
+authSchema.post<AuthModel>("save", async function (doc) {
+  if (doc.role === "User") {
     await UserModel.create({ authId: doc._id});
-  } else if (doc.role === 'Trainer') {
+  } else if (doc.role === "Trainer") {
     await TrainerModel.create({ authId: doc._id });
   }
 });
 
 
-export default mongoose.model<Auth>('Auth', authSchema);
+export default mongoose.model<Auth>("Auth", authSchema);
 
 

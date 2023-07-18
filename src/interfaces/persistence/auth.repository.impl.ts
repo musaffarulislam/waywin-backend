@@ -1,5 +1,5 @@
-import AuthModel from '../../interfaces/models/AuthModel';
-import { Auth } from '../../app/entity/auth.entity';
+import AuthModel from "../../interfaces/models/AuthModel";
+import { Auth } from "../../app/entity/auth.entity";
 
 export class AuthRepositoryImpl {
   public async createUser(username: string, email: string, phoneNumber: string, role: string, password: string): Promise<void> {
@@ -7,7 +7,7 @@ export class AuthRepositoryImpl {
       const auth = new AuthModel({ username, email, phoneNumber, role, password });
       await auth.save();
     } catch (error) {
-      throw new Error('Failed to create user.');
+      throw new Error("Failed to create user.");
     }
   }
 

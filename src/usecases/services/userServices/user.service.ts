@@ -1,6 +1,6 @@
-import Razorpay from 'razorpay';
-import { ITrainerProfile } from '../../../app/entity/trainer.entity';
-import { IBooking } from '../../../app/entity/user.entity';
+import Razorpay from "razorpay";
+import { ITrainerProfile } from "../../../app/entity/trainer.entity";
+import { IBooking } from "../../../app/entity/user.entity";
 
 export class UserService {
 
@@ -34,7 +34,7 @@ export class UserService {
 
       const lastBooking = await this.userRepository.lastBooking();
 
-      let bookingId = 'WAYWIN000001';
+      let bookingId = "WAYWIN000001";
       if (lastBooking.length > 0) {
         const lastBookingId = lastBooking[0].bookingId;
         const bookingIdNumber = parseInt(lastBookingId.slice(6));
@@ -73,7 +73,7 @@ export class UserService {
       const order = await razorpayInstance.orders.fetch(orderId);
 
       if (!order) {
-        throw new Error('Payment somthing wrong');
+        throw new Error("Payment somthing wrong");
       } 
 
       if (order.status === "paid") {

@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { AdminApproveService } from '../../usecases/services/adminServices/admin.approve.service';
-import { Auth } from '../../app/entity/auth.entity';
+import { Request, Response } from "express";
+import { AdminApproveService } from "../../usecases/services/adminServices/admin.approve.service";
+import { Auth } from "../../app/entity/auth.entity";
 
 export class AdminApproveController {
     private adminApproveService: AdminApproveService;

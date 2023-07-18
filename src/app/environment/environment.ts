@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
 const environment_name: string = process.env.Environment;
@@ -6,10 +6,10 @@ const PORT: number = Number(process.env.PORT);
 const DB_PREFIX: string = process.env.DB_NAME;
 
 enum Environments {
-    local_environment = 'local',
-    dev_environment = 'dev',
-    prod_environment = 'prod',
-    qa_environment = 'qa',
+    local_environment = "local",
+    dev_environment = "dev",
+    prod_environment = "prod",
+    qa_environment = "qa",
 }
 
 class Environment {

@@ -1,7 +1,7 @@
-import { ITrainerAvailableDate } from '../../app/entity/trainer.entity';
-import TrainerModel, { ITrainer } from '../../interfaces/models/TrainerModel';
-import cloudinary from '../config/cloudinary';
-import BookingModel from '../models/BookingModel';
+import { ITrainerAvailableDate } from "../../app/entity/trainer.entity";
+import TrainerModel, { ITrainer } from "../../interfaces/models/TrainerModel";
+import cloudinary from "../config/cloudinary";
+import BookingModel from "../models/BookingModel";
 
 export class TrainerRepositoryImpl { 
   
@@ -9,16 +9,16 @@ export class TrainerRepositoryImpl {
     try {
       await TrainerModel.updateOne({authId: authId},
         {$set: {
-          'profile.services': services,
-          'profile.description': description,
-          'profile.tags': tags,
-          'profile.experience': experience,
-          'profile.mode': mode,
-          'isProfile': true,
+          "profile.services": services,
+          "profile.description": description,
+          "profile.tags": tags,
+          "profile.experience": experience,
+          "profile.mode": mode,
+          "isProfile": true,
         }
       })
     } catch (error) {
-      throw new Error('Failed to create trainer');
+      throw new Error("Failed to create trainer");
     }
   }
 
@@ -26,18 +26,18 @@ export class TrainerRepositoryImpl {
     try {
       await TrainerModel.updateOne({authId: authId},
         {$set: {
-          'fee.consultingFee': consultingFee,
-          'fee.trainingFee': trainingFee,
+          "fee.consultingFee": consultingFee,
+          "fee.trainingFee": trainingFee,
         }
       })
     } catch (error) {
-      throw new Error('Failed to add fee trainer');
+      throw new Error("Failed to add fee trainer");
     }
   }
 
   public async findByAuthId(authId: string): Promise<ITrainer | null> {
     try{
-      return await TrainerModel.findOne({authId}).populate('authId'); 
+      return await TrainerModel.findOne({authId}).populate("authId","-password"); 
     }catch (error){
       throw new Error("Trainer not available")
     }
@@ -95,14 +95,14 @@ export class TrainerRepositoryImpl {
         const trainer2 = await TrainerModel.findOne({ authId: authId }); 
       }
     } catch (error) { 
-      throw new Error('Failed to add dates.');
+      throw new Error("Failed to add dates.");
     }
   }
 
   public async getBookingInformation(authId: string):Promise<any | null> {
     try{
       const trainerInfo = await TrainerModel.findOne({authId})
-      return await BookingModel.find({trainerId: trainerInfo._id}).populate("userId").populate({path: 'trainerId', populate: {path: 'authId'}})
+      return await BookingModel.find({trainerId: trainerInfo._id}).populate("userId").populate({path: "trainerId", populate: {path: "authId",select: "-password"}})
     }catch (error){
       throw new Error("Trainer not available")
     }

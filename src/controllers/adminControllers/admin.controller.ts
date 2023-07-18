@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { AdminService } from '../../usecases/services/adminServices/admin.service';
-import { Auth } from '../../app/entity/auth.entity';
+import { Request, Response } from "express";
+import { AdminService } from "../../usecases/services/adminServices/admin.service";
+import { Auth } from "../../app/entity/auth.entity";
 
 export class AdminController {
     private adminService: AdminService;

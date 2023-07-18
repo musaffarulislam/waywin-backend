@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import { TokenUtils } from '../../utils/tokenUtils';
-import { Auth } from '../../../app/entity/auth.entity';
+import bcrypt from "bcrypt";
+import { TokenUtils } from "../../utils/tokenUtils";
+import { Auth } from "../../../app/entity/auth.entity";
 
 export class AuthService {
   private readonly tokenUtils: TokenUtils;
@@ -23,19 +23,19 @@ export class AuthService {
           const refreshToken = this.tokenUtils.generateRefreshTokenAdmin(email);
           return { accessToken, refreshToken, role: "Admin"};
         } else {
-          throw new Error('Invalid credentials');
+          throw new Error("Invalid credentials");
         }
       } else {
         if(auth.isActive){
           const checkPassword = await bcrypt.compare(password, auth.password);
           if (!checkPassword) {
-            throw new Error('Invalid credentials');
+            throw new Error("Invalid credentials");
           }
           const accessToken = this.tokenUtils.generateAccessToken(auth._id);
           const refreshToken = this.tokenUtils.generateRefreshToken(auth._id);
           return { accessToken, refreshToken, role: auth.role };
         }else {
-          throw new Error('This email suspended');
+          throw new Error("This email suspended");
         }
       }
     }catch(error){
@@ -86,21 +86,21 @@ export class AuthService {
   public async checkUsernameExist(username: string):  Promise<void> {
     const auth = await this.authRepository.findByUsername(username);
     if(auth){
-      throw new Error('Username already registered');
+      throw new Error("Username already registered");
     }
   }
 
   public async checkEmailExist(email: string):  Promise<void> {
     const auth = await this.authRepository.findByEmail(email);
     if(auth){
-      throw new Error('Email already registered');
+      throw new Error("Email already registered");
     }
   }
 
   public async checkPhoneNumberExist(phoneNumber: number):  Promise<void> {
     const auth = await this.authRepository.findByPhoneNumber(phoneNumber);
     if(auth){
-      throw new Error('Phone number already registered');
+      throw new Error("Phone number already registered");
     }
   }
 }

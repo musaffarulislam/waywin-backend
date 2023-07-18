@@ -6,7 +6,7 @@ export class UserRepositoryImpl{
     
     public async getAllTrainersInformation():Promise<any | null> {
         try{
-            return await TrainerModel.find().populate('authId'); 
+            return await TrainerModel.find().populate("authId","-password"); 
         }catch (error){
             throw new Error("Trainers not available")
         }
@@ -14,7 +14,7 @@ export class UserRepositoryImpl{
     
     public async getTrainerInformation(trainerId: string):Promise<any | null> {
         try{
-            return await TrainerModel.findOne({_id: trainerId}).populate('authId'); 
+            return await TrainerModel.findOne({_id: trainerId}).populate("authId","-password"); 
         }catch (error){
             throw new Error("Trainer not available")
         }
@@ -24,14 +24,14 @@ export class UserRepositoryImpl{
         try {
           return await BookingModel.find().sort({ _id: -1 }).limit(1)
         } catch (error) {
-          throw new Error('Last booking is failed');
+          throw new Error("Last booking is failed");
         }
       }
 
     
     public async getBookingInformation(authId: string):Promise<any | null> {
       try{
-        return await BookingModel.find({userId: authId}).populate('trainerId').populate({path: 'trainerId', populate: {path: 'authId'}}); 
+        return await BookingModel.find({userId: authId}).populate("trainerId").populate({path: "trainerId", populate: {path: "authId",select: "-password"}}); 
       }catch (error){
         throw new Error("Trainer not available")
       }
@@ -51,7 +51,7 @@ export class UserRepositoryImpl{
            });
           await booking.save();
         } catch (error) { 
-          throw new Error('Failed to create user.');
+          throw new Error("Failed to create user.");
         }
       }
 
@@ -63,7 +63,7 @@ export class UserRepositoryImpl{
           );
           console.log("Updated Trainer: ", trainer);
         } catch (error) {
-          throw new Error('Failed to update trainer available date.');
+          throw new Error("Failed to update trainer available date.");
         }
       }
 }

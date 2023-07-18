@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { AuthService } from '../../usecases/services/authServices/auth.service';
-import { Auth } from '../../app/entity/auth.entity';
+import { Request, Response } from "express";
+import { AuthService } from "../../usecases/services/authServices/auth.service";
+import { Auth } from "../../app/entity/auth.entity";
 
 interface CustomRequest extends Request {
   authId: string;
@@ -18,9 +18,9 @@ export class AuthController {
       const { username, email, phoneNumber, role, password } = req.body;
       const auth: Auth = { username, email, phoneNumber, role, password }
       await this.authService.signup(auth);      
-      res.status(201).json({ message: 'User created successfully'});
+      res.status(201).json({ message: "User created successfully"});
     } catch (error) {
-      res.status(500).json({ error: 'Internal server error'});
+      res.status(500).json({ error: "Internal server error"});
     }
   };
 

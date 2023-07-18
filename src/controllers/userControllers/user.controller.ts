@@ -1,6 +1,6 @@
-import {Request, Response } from 'express';
-import { UserService } from '../../usecases/services/userServices/user.service';
-import { ITrainerProfile } from '../../app/entity/trainer.entity'
+import {Request, Response } from "express";
+import { UserService } from "../../usecases/services/userServices/user.service";
+import { ITrainerProfile } from "../../app/entity/trainer.entity"
 
 interface CustomRequest extends Request {
     authId: string;
@@ -38,7 +38,7 @@ export class UserController {
             const { amount } = req.body;
             const booking = await this.userService.booking(amount)
             if (!booking) return res.status(500).send({error: "Please check internet connection"})
-            res.status(201).json({ message: 'Trainer booking successfully', data: booking})
+            res.status(201).json({ message: "Trainer booking successfully", data: booking})
         }catch (error){
             res.status(500).json({ error: error.message })
         }
@@ -59,7 +59,7 @@ export class UserController {
             const { bookingData, trainerId, bookingId, orderId} = req.body;
             const authId = req.authId
             await this.userService.bookingTrainer(bookingData, trainerId, bookingId, orderId, authId )
-            res.status(201).json({ message: 'Trainer booking successfully'})
+            res.status(201).json({ message: "Trainer booking successfully"})
         }catch (error){
             res.status(500).json({ error: error.message })
         }

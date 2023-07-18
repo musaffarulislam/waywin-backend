@@ -1,4 +1,4 @@
-import { ITrainerAvailableDate, ITrainerFee, ITrainerProfile } from '../../../app/entity/trainer.entity';
+import { ITrainerAvailableDate, ITrainerFee, ITrainerProfile } from "../../../app/entity/trainer.entity";
 
 export class TrainerService {
 

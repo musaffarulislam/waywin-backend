@@ -11,7 +11,7 @@ export class AdminRepositoryImpl{
     
     public async getAllUserInformation():Promise<any | null> {
         try{
-            return await UserModel.find().populate('authId'); 
+            return await UserModel.find().populate("authId","-password"); 
         }catch (error){
             throw new Error("Trainer not available")
         }
@@ -19,7 +19,7 @@ export class AdminRepositoryImpl{
 
     public async getAllTrainerInformation():Promise<any | null> {
         try{
-            return await TrainerModel.find().populate('authId'); 
+            return await TrainerModel.find().populate("authId","-password"); 
         }catch (error){
             throw new Error("Trainer not available")
         }
@@ -74,7 +74,7 @@ export class AdminRepositoryImpl{
 
     public async getAllBookings():Promise<any | null> {
         try{
-            return await BookingModel.find().populate("userId").populate({path: 'trainerId', populate: {path: 'authId'}}) 
+            return await BookingModel.find().populate("userId").populate({path: "trainerId", populate: {path: "authId",select: "-password"}}) 
         }catch (error){
             throw new Error("Trainer not available")
         }
