@@ -25,7 +25,8 @@ export class ChatService {
 
   public async fetchChat(authId: string){
     try{
-      return await this.chatRepository.getAllChats(authId); 
+      const chats = await this.chatRepository.getAllChats(authId);  
+      return chats
     }catch(error){
       throw error
     }

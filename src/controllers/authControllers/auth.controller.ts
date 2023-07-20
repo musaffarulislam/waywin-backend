@@ -9,7 +9,7 @@ interface CustomRequest extends Request {
 export class AuthController {
   private authService: AuthService;
 
-  constructor(private readonly dependency: any) {
+   constructor(private readonly dependency: any) {
     this.authService = new AuthService(this.dependency);
   }
 

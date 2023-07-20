@@ -26,7 +26,7 @@ export class ChatController {
     public fetchChat = async (req: CustomRequest, res: Response) => {
         try{
             const authId = req.authId
-            const chats = await this.chatService.fetchChat(authId)
+            const chats = await this.chatService.fetchChat(authId) 
             res.status(201).json({chats})
         }catch (error){
             res.status(500).json({ error: error.message })

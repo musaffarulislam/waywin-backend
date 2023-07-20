@@ -137,4 +137,13 @@ export class AdminController {
             res.status(500).json({ error: error.message});
         }
     }
+
+    public getChartData = async (req: Request, res: Response) => {
+        try{
+            const chartData = await this.adminService.getChartData();       
+            res.status(201).json({ chartData });
+        }catch(error){
+            res.status(500).json({ error: error.message});
+        }
+    }
 }

@@ -29,9 +29,9 @@ export class MessageRepositoryImpl{
       }
     }
         
-    public async changeLatestMessage(message: string, authId: string): Promise<any | null> {
+    public async changeLatestMessage(message: string, chatId: string): Promise<any | null> {
       try { 
-        await ChatModel.findByIdAndUpdate(authId, { latestMessage: message });
+        await ChatModel.findByIdAndUpdate(chatId, { latestMessage: message });
       } catch (error) {
         throw new Error("Oops! create chat error");
       }

@@ -16,7 +16,7 @@ export class MessageService {
   public async sendMessage(content: string, chatId: string, authId: string){
     try{ 
       const message = await this.messageRepository.createMessage(content, chatId, authId); 
-      await this.messageRepository.changeLatestMessage(message, authId); 
+      await this.messageRepository.changeLatestMessage(message, chatId); 
       return message
     }catch(error){
       throw error

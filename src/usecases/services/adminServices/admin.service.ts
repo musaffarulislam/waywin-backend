@@ -122,4 +122,12 @@ export class AdminService {
         }
     }
 
+    public async getChartData(){
+        try{
+            return await this.adminRepository.getChartData(); 
+        }catch(error){
+            throw error
+        }
+    }
+
 }

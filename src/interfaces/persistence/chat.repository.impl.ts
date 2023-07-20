@@ -12,7 +12,7 @@ export class ChatRepositoryImpl{
             ],
           })
             .populate("users", "-password")
-            .populate("latestMessage");
+            .populate("latestMessage")
         }catch (error){
             throw new Error("Check chat is not available")
         }
@@ -37,9 +37,17 @@ export class ChatRepositoryImpl{
     
     public async getAllChats(authId: string):Promise<any | null> {
         try{
+          console.log("authId :",authId)
           return await ChatModel.find({ users: { $elemMatch: { $eq: authId } } })
           .populate("users", "-password") 
           .populate("latestMessage")
+          .populate({
+            path: "latestMessage",
+            populate: {
+              path: "sender",
+              select: "-password -phoneNumber",
+            },
+          })
           .sort({ updatedAt: -1 })
         }catch (error){
             throw new Error("Oops! create chat to error")

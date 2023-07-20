@@ -29,7 +29,11 @@ const trainerRouter = (dependency:any) => {
 
   router.get("/get-booking-info", verifyToken.verifyAccessToken, trainerController.getBookingInformation);
   
+  router.get("/getChart-mode", verifyToken.verifyAccessToken, trainerController.getChartMode);
+  router.get("/getChart-service", verifyToken.verifyAccessToken, trainerController.getChartService);
+
   router.get("/getTags", verifyToken.verifyAccessToken, tagController.getTags);
+
 
   return router;
 };

@@ -112,4 +112,26 @@ export class TrainerController {
         }
     };
 
+    public getChartMode = async (req: CustomRequest, res: Response) => {
+        try{
+            const authId = req.authId
+            console.log("authId :",authId)
+            const chartMode = await this.trainerService.getChartMode(authId)
+            res.status(201).json({ chartMode })
+        }catch (error){
+            res.status(500).json({ error: error.message })
+        }
+    };
+
+    public getChartService = async (req: CustomRequest, res: Response) => {
+        try{
+            const authId = req.authId
+            console.log("authId :",authId)
+            const chartService = await this.trainerService.getChartService(authId)
+            res.status(201).json({ chartService })
+        }catch (error){
+            res.status(500).json({ error: error.message })
+        }
+    };
+
 }

@@ -94,5 +94,21 @@ export class TrainerService {
       throw error
     }
   }
+  
+  public async getChartMode(authId: string){
+    try{
+      return await this.trainerRepository.getChartMode(authId); 
+    }catch(error){
+      throw error
+    }
+  }
+  
+  public async getChartService(authId: string){
+    try{
+      return await this.trainerRepository.getChartService(authId); 
+    }catch(error){
+      throw error
+    }
+  }
 
 }

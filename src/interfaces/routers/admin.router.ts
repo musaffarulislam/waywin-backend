@@ -34,6 +34,7 @@ const trainerRouter = (dependency:any) => {
   router.put("/change-auth-status", verifyToken.verifyAccessToken, adminApproveController.changeAuthStatus);
   router.put("/trainer-verify", verifyToken.verifyAccessToken, adminApproveController.trainerVerify);
 
+  router.get("/getChart-data", verifyToken.verifyAccessToken, adminController.getChartData);
 
   return router;
 };
