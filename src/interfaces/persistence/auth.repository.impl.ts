@@ -8,6 +8,7 @@ export class AuthRepositoryImpl {
       const auth = new AuthModel({ username, email, phoneNumber, role, password });
       await auth.save();
     } catch (error) {
+      console.log("error :",error)
       throw new Error("Failed to create user.");
     }
   }
