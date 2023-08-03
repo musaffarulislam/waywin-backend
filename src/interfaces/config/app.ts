@@ -33,7 +33,7 @@ class App {
         this.app.use(bodyParser.urlencoded({limit: "50mb", extended: false}));
 
         this.app.use(cors({
-            origin: "http://localhost:3000",
+            origin: process.env.BASE_URL,
             methods: ["GET", "POST", "PUT", "DELETE"],
             allowedHeaders: ["Content-Type", "Authorization"]
         }));
