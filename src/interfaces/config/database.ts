@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import env from "../../app/environment/environment";
 
 const dbname: String = env.getDBName();
-const MONGODB_URI: string = process.env.MONGO_URI+"/"+dbname;
+const MONGODB_URI = `${process.env.MONGO_URI}/${dbname}`;
+
 
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -19,4 +20,7 @@ export const connectToDatabase = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+
+
 

@@ -60,8 +60,7 @@ export class UserRepositoryImpl{
           const trainer = await TrainerModel.findOneAndUpdate(
             { _id: trainerId, "availableDates.date": date },
             { $pull: { "availableDates.$.time": time } }
-          );
-          console.log("Updated Trainer: ", trainer);
+          ); 
         } catch (error) {
           throw new Error("Failed to update trainer available date.");
         }

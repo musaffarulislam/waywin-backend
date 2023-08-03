@@ -17,8 +17,7 @@ export class VerifyTokenController{
     public verifyAccessToken = async (req: CustomRequest, res: Response, next: NextFunction) => { 
         const accessToken: string | undefined = req.headers?.authorization?.split(" ")[1];
         const verifyToken: any = this.authService.verifyAccessToken(accessToken);
-        if (!accessToken || !verifyToken) {
-          console.log("No access token");
+        if (!accessToken || !verifyToken) { 
           return res.status(401).json({ error: "Invalid access token" });
         }
         req.authId = verifyToken.authId;

@@ -295,12 +295,12 @@ export class TrainerRepositoryImpl {
   
       const datasets: Dataset[] = [
         {
-          label: 'Online Bookings',
+          label: 'Consulting Services',
           data: consultingCounts,
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
         },
         {
-          label: 'Offline Bookings',
+          label: 'Training Services',
           data: serviceCounts,
           backgroundColor: 'rgba(255, 159, 64, 0.5)',
         },

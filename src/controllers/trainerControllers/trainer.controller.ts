@@ -114,8 +114,7 @@ export class TrainerController {
 
     public getChartMode = async (req: CustomRequest, res: Response) => {
         try{
-            const authId = req.authId
-            console.log("authId :",authId)
+            const authId = req.authId 
             const chartMode = await this.trainerService.getChartMode(authId)
             res.status(201).json({ chartMode })
         }catch (error){
@@ -125,8 +124,7 @@ export class TrainerController {
 
     public getChartService = async (req: CustomRequest, res: Response) => {
         try{
-            const authId = req.authId
-            console.log("authId :",authId)
+            const authId = req.authId 
             const chartService = await this.trainerService.getChartService(authId)
             res.status(201).json({ chartService })
         }catch (error){

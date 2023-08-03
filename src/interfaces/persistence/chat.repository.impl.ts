@@ -36,8 +36,7 @@ export class ChatRepositoryImpl{
     }
     
     public async getAllChats(authId: string):Promise<any | null> {
-        try{
-          console.log("authId :",authId)
+        try{ 
           return await ChatModel.find({ users: { $elemMatch: { $eq: authId } } })
           .populate("users", "-password") 
           .populate("latestMessage")

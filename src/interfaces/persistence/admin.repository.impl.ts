@@ -105,8 +105,7 @@ export class AdminRepositoryImpl{
                     $sort: { _id: 1 },
                 },
             ]);
-            
-            console.log(bookingData) 
+             
             const authData = await AuthModel.aggregate([
               {
                 $match: {
@@ -122,8 +121,7 @@ export class AdminRepositoryImpl{
               {
                 $sort: { _id: 1 },
               },
-            ]);
-            console.log(authData)
+            ]); 
           
             const labels: string[] = [];
             const datasets: Dataset[] = [ 

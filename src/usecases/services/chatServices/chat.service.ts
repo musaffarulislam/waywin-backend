@@ -6,15 +6,12 @@ export class ChatService {
 
   public async accessChat(authId:string, userId:string){
     try{
-      let isChat = await this.chatRepository.checkChatIsExist(authId, userId); 
-      console.log("isChat :",isChat)
-      if(isChat.length>0){
-        console.log("authId 2:",authId," userId 2:",userId)
+      let isChat = await this.chatRepository.checkChatIsExist(authId, userId);  
+      if(isChat.length>0){ 
         isChat = isChat[0]
         return isChat
       }else{
-        const fullChat = await this.chatRepository.createChat(authId, userId);
-        console.log("authId 3:",authId," userId 3:",userId)
+        const fullChat = await this.chatRepository.createChat(authId, userId); 
         return fullChat
       }
       // return {isChat};

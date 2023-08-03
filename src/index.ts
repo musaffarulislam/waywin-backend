@@ -21,8 +21,7 @@ io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     if (!userData || !userData._id) { 
       return console.log("Invalid userData");
-    }
-    console.log("userData : ",userData); 
+    } 
     socket.join(userData._id);
     socket.emit("connected");
   });
