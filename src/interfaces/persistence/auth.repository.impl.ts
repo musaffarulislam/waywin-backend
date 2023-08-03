@@ -3,12 +3,10 @@ import { Auth } from "../../app/entity/auth.entity";
 
 export class AuthRepositoryImpl {
   public async createUser(username: string, email: string, phoneNumber: string, role: string, password: string): Promise<void> {
-    try {
-      console.log("username :",username, "email : ",email, "phoneNumber : ",phoneNumber, "role : ",role," password : ",password)
+    try { 
       const auth = new AuthModel({ username, email, phoneNumber, role, password });
       await auth.save();
-    } catch (error) {
-      console.log("error :",error)
+    } catch (error) { 
       throw new Error("Failed to create user.");
     }
   }
