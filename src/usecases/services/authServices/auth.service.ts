@@ -10,8 +10,12 @@ export class AuthService {
   }
 
   public async signup({username, email, phoneNumber, role, password}: Auth): Promise<void> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await this.authRepository.createUser(username, email, phoneNumber, role, hashedPassword);
+    try{
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await this.authRepository.createUser(username, email, phoneNumber, role, hashedPassword);
+    }catch(error){
+      throw error
+    }
   }
 
   public async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string; role?: string }> {
@@ -64,8 +68,12 @@ export class AuthService {
   }
 
   public generateAccessToken(authId: any): { accessToken: string} {
-    const accessToken = this.tokenUtils.generateAccessToken(authId);
-    return { accessToken }
+    try{
+      const accessToken = this.tokenUtils.generateAccessToken(authId);
+      return { accessToken }
+    }catch(error){
+      throw error
+    }
   }
   
   public async getAuthInformation(authId: string){
@@ -84,23 +92,35 @@ export class AuthService {
   }
 
   public async checkUsernameExist(username: string):  Promise<void> {
-    const auth = await this.authRepository.findByUsername(username);
-    if(auth){
-      throw new Error("Username already registered");
+    try{
+      const auth = await this.authRepository.findByUsername(username);
+      if(auth){
+        throw new Error("Username already registered");
+      }
+    }catch(error){
+      throw error
     }
   }
 
   public async checkEmailExist(email: string):  Promise<void> {
-    const auth = await this.authRepository.findByEmail(email);
-    if(auth){
-      throw new Error("Email already registered");
+    try{
+        const auth = await this.authRepository.findByEmail(email);
+        if(auth){
+          throw new Error("Email already registered");
+        }
+    }catch(error){
+      throw error
     }
   }
 
   public async checkPhoneNumberExist(phoneNumber: number):  Promise<void> {
-    const auth = await this.authRepository.findByPhoneNumber(phoneNumber);
-    if(auth){
-      throw new Error("Phone number already registered");
+    try{
+      const auth = await this.authRepository.findByPhoneNumber(phoneNumber);
+      if(auth){
+        throw new Error("Phone number already registered");
+      }
+    }catch(error){
+      throw error
     }
   }
 }
