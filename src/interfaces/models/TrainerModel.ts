@@ -31,21 +31,21 @@ const trainerSchema = new Schema<ITrainer>({
   },
   wallate: Number,
   fee: {
-    consultingFee: {type: Number, required: true},
-    trainingFee: {type: Number, required: true},
+    consultingFee: {type: Number},
+    trainingFee: {type: Number},
   },
   profileImage: {
-    public_id: {type: String, required: true},
-    url: {type: String, required: true},
+    public_id: {type: String},
+    url: {type: String},
   },
   isProfile: { type: Boolean, default: false},
   bannerImage: {
-    public_id: {type: String, required: true},
-    url: {type: String, required: true},
+    public_id: {type: String},
+    url: {type: String},
   },
   availableDates: [
     {
-      date: { type: Date, required: true },
+      date: { type: Date },
       time: [String],
     },
   ],
