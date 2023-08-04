@@ -35,13 +35,7 @@ class App {
         this.app.use(bodyParser.urlencoded({limit: "50mb", extended: false}));
 
         this.app.use(cors({
-        origin: function (origin, callback) {
-            if (this.allowedOrigins.includes(origin)) {
-            callback(null, true);
-            } else {
-            callback(new Error('Not allowed by CORS'));
-            }
-        },
+        origin: '*',
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"]
         }));;
