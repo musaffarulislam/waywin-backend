@@ -18,8 +18,8 @@ const authRouter = (dependency:any) => {
   router.post("/login", authValidator.validateLoginData, authController.login);
   router.post("/token", verifyToken.verifyRefreshToken);
 
-  router.get("/otp-generate", authController.otpGenerate);
-  router.get("/otp-verify", authController.otpVerify);
+  router.get("/otp-generate/:email", authController.otpGenerate);
+  router.get("/otp-verify/:email/:otp", authController.otpVerify);
 
   router.get("/getAuth-info", verifyToken.verifyAccessToken,authGetController.getAuthInformation);
 

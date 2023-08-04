@@ -26,7 +26,7 @@ export class AuthController {
 
   public otpGenerate = async (req: Request, res: Response) => {
     try {
-      const { email } = req.body;
+      const { email } = req.params;
       await this.authService.otpGenerate(email);      
       res.status(201).json({ message: "Otp is generate"});
     } catch (error) { 
@@ -36,7 +36,7 @@ export class AuthController {
   
   public otpVerify = async (req: Request, res: Response) => {
     try {
-      const { email, otp } = req.body;
+      const { email, otp } = req.params;
       await this.authService.verifyOtp(email, otp);      
       res.status(201).json({ message: "Otp is correct" });
     } catch (error) { 

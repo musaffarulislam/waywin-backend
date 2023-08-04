@@ -84,11 +84,8 @@ export class AuthService {
       const expiresAtUTC = new Date(userOtp.expiresAt); // Convert to UTC date object
   
       if (otp === userOtp.otp) {
-        const date = new Date(Date.now());
-        console.log(date);
-        console.log("userOtp :", expiresAtUTC);
-  
-        if (date > expiresAtUTC) {
+        const date = new Date(Date.now()); 
+        if (date < expiresAtUTC) {
           await this.authRepository.deleteOtp(email);
         } else {
           throw new Error("Otp expired. Please resend otp");
