@@ -20,6 +20,8 @@ import * as adminRepository from "../../app/repositories/admin.repository";
 class App {
     public app: express.Application;
 
+    public allowedOrigins: string[] = process.env.ALLOWED_ORIGINS.split(',');
+
     constructor(){
         this.app = express();
         this.config();
@@ -33,10 +35,16 @@ class App {
         this.app.use(bodyParser.urlencoded({limit: "50mb", extended: false}));
 
         this.app.use(cors({
-            origin: process.env.BASE_URL,
-            methods: ["GET", "POST", "PUT", "DELETE"],
-            allowedHeaders: ["Content-Type", "Authorization"]
-        }));
+        origin: function (origin, callback) {
+            if (this.allowedOrigins.includes(origin)) {
+            callback(null, true);
+            } else {
+            callback(new Error('Not allowed by CORS'));
+            }
+        },
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"]
+        }));;
     }
 
     private routes(): void {
