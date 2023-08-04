@@ -35,9 +35,9 @@ class App {
         this.app.use(bodyParser.urlencoded({limit: "50mb", extended: false}));
 
         this.app.use(cors({
-        origin: '*',
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"]
+            origin: '*',
+            methods: ["GET", "POST", "PUT", "DELETE"],
+            allowedHeaders: ["Content-Type", "Authorization"]
         }));;
     }
 
