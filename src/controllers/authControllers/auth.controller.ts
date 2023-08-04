@@ -18,10 +18,29 @@ export class AuthController {
       const { username, email, phoneNumber, role, password } = req.body;
       const auth: Auth = { username, email, phoneNumber, role, password }
       await this.authService.signup(auth);      
-      res.status(201).json({ message: "User created successfully"});
-    } catch (error) {
-      console.log(error)
+      res.status(201).json({ message: "Otp send successful"});
+    } catch (error) { 
       res.status(500).json({ error: error.message});
+    }
+  };
+
+  public otpGenerate = async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      await this.authService.otpGenerate(email);      
+      res.status(201).json({ message: "Otp is generate"});
+    } catch (error) { 
+      res.status(400).json({ error: error.message});
+    }
+  };
+  
+  public otpVerify = async (req: Request, res: Response) => {
+    try {
+      const { email, otp } = req.body;
+      await this.authService.verifyOtp(email, otp);      
+      res.status(201).json({ message: "Otp is correct" });
+    } catch (error) { 
+      res.status(400).json({ error: error.message});
     }
   };
 

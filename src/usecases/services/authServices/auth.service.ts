@@ -1,12 +1,24 @@
 import bcrypt from "bcrypt";
 import { TokenUtils } from "../../utils/tokenUtils";
 import { Auth } from "../../../app/entity/auth.entity";
+import nodemailer from "nodemailer";
 
 export class AuthService {
   private readonly tokenUtils: TokenUtils;
+  private readonly transporter: nodemailer.Transporter;
 
   constructor(private readonly authRepository: any) {
     this.tokenUtils = new TokenUtils();
+
+    this.transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.USER_NODEMAILER,
+        pass: process.env.API_KEY_NODEMAILER
+      }
+    });
   }
 
   public async signup({username, email, phoneNumber, role, password}: Auth): Promise<void> {
@@ -15,6 +27,77 @@ export class AuthService {
       await this.authRepository.createUser(username, email, phoneNumber, role, hashedPassword);
     }catch(error){
       throw error
+    }
+  }
+
+  public async otpGenerate(email: string): Promise<void> {
+    try{
+      const otp: string = Math.floor(1000 + Math.random() * 9000).toString(); 
+      const options: any = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      };
+      const expirationTime = new Date(Date.now() + 5 * 60 * 1000).toLocaleString(undefined, options);
+
+      await this.authRepository.deleteOtp(email);
+
+      await this.authRepository.newOtp(email, otp, expirationTime);
+
+      const mailOptions = {
+        from: process.env.USER_NODEMAILER,
+        to: email,
+        subject: 'OTP',
+        text: `Your otp :${otp}`,
+        html: `
+        <div style="border-bottom:1px solid #eee">
+          <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Bookworm</a>
+        </div>
+        <p style="font-size:1.1em">Hi email,</p>
+        <p>Thank you for choosing Waywin. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes</p>
+        <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${otp}</h2>
+        <p style="font-size:0.9em;">Regards,<br />Bookworm</p>
+        <hr style="border:none;border-top:1px solid #eee" />
+        <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
+          <p>Waywin</p>
+        </div>`
+      };
+      
+      await this.transporter.sendMail(mailOptions, (error: any, info: any) => {
+        if (error) {
+          throw new Error("Failed to send otp");
+        } else {
+          console.log("Email sent successfully");
+        }
+      });
+    }catch(error){
+      throw error
+    }
+  }
+  
+  public async verifyOtp(email: string, otp: string): Promise<void> {
+    try { 
+      const userOtp = await this.authRepository.findOtp(email);
+      const expiresAtUTC = new Date(userOtp.expiresAt); // Convert to UTC date object
+  
+      if (otp === userOtp.otp) {
+        const date = new Date(Date.now());
+        console.log(date);
+        console.log("userOtp :", expiresAtUTC);
+  
+        if (date > expiresAtUTC) {
+          await this.authRepository.deleteOtp(email);
+        } else {
+          throw new Error("Otp expired. Please resend otp");
+        }
+      } else {
+        throw new Error("Otp is incorrect. Please verify otp");
+      }
+    } catch (error) {
+      throw error;
     }
   }
 

@@ -1,5 +1,6 @@
 import AuthModel from "../../interfaces/models/AuthModel";
 import { Auth } from "../../app/entity/auth.entity";
+import OtpModel from "../models/OtpModel";
 
 export class AuthRepositoryImpl {
 
@@ -10,6 +11,35 @@ export class AuthRepositoryImpl {
       await auth.save();
     } catch (error) { 
       console.log("Error :",error)
+      throw new Error("Failed to create user.");
+    }
+  }
+
+  public async findOtp(email: string) {
+    try {  
+      return await OtpModel.findOne({email: email});
+    } catch (error) {  
+      throw new Error("Failed to create user.");
+    }
+  }
+
+  public async deleteOtp(email: string) {
+    try {  
+      return await OtpModel.deleteMany({email: email});
+    } catch (error) {  
+      throw new Error("Failed to create user.");
+    }
+  }
+
+  public async newOtp(email: string, otp: string, expirationTime: Date): Promise<void> {
+    try {  
+      const newOtp = new OtpModel({ 
+        email, 
+        otp,
+        expiresAt: expirationTime  
+      });
+      await newOtp.save();
+    } catch (error) {  
       throw new Error("Failed to create user.");
     }
   }
