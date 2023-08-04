@@ -13,6 +13,10 @@ interface ITagArray extends Array<string> {
     backgroundColor: string;
   }
 
+  interface ITags {
+    tags: ITagArray;
+  }
+
 export class AdminRepositoryImpl{
     
     public async getAllUserInformation():Promise<any | null> {
@@ -39,16 +43,23 @@ export class AdminRepositoryImpl{
         }
     }
 
-    public async addTag(tag: string):Promise<void> {
-        const tags = await TagsModel.findOne({});
-        if (tags) {
+    public async addTag(tag: string): Promise<void> {
+        try {
+          const tags = await TagsModel.findOne({});
+          if (tags) {
             const tagArray: any = tags.tags;
-            tagArray.push(tag)
-            await tags.save();  
-        } else {
-            throw new Error("Tags not found");
+            tagArray.push(tag);
+            await tags.save();
+          } else {
+            // Create a new document with the tag and save it to create the collection
+            const newTagsDocument: ITags = { tags: [tag] };
+            const newTags = new TagsModel(newTagsDocument);
+            await newTags.save();
+          }
+        } catch (error) {
+          throw error;
         }
-    }
+      }
 
     public async editTag(index: number, tag: string):Promise<void> {
         const tags = await TagsModel.findOne({});
