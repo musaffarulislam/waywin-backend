@@ -69,6 +69,7 @@ export class AuthService {
       await this.transporter.sendMail(mailOptions, (error: any, info: any) => {
         if (error) {
           console.log("Failed to generate otp");
+          throw new Error("Failed to generate otp"); 
         } else {
           console.log("Email sent successfully");
         }
