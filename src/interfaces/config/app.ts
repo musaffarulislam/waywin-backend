@@ -1,3 +1,4 @@
+import * as dotenv from "dotenv";
 import express from "express";
 import * as bodyParser from "body-parser";
 import morgan from "morgan"
@@ -16,6 +17,8 @@ import * as userRepository from "../../app/repositories/user.repository";
 import * as chatRepository from "../../app/repositories/chat.repository";
 import * as messageRepository from "../../app/repositories/message.repository";
 import * as adminRepository from "../../app/repositories/admin.repository";
+
+dotenv.config();
 
 class App {
     public app: express.Application;

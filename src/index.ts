@@ -1,9 +1,11 @@
+import * as dotenv from "dotenv";
 import app from "./interfaces/config/app";
 import env from "./app/environment/environment";
 import http from "http";
 import { Server, Socket  } from "socket.io";
 
 const PORT = env.getPort();
+dotenv.config();
 
 const allowedOrigins: string[] = process.env.ALLOWED_ORIGINS.split(',');
 
