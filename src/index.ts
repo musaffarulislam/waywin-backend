@@ -5,11 +5,13 @@ import { Server, Socket  } from "socket.io";
 
 const PORT = env.getPort();
 
+const allowedOrigins: string[] = process.env.ALLOWED_ORIGINS.split(',');
+
 const server = http.createServer(app); 
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: process.env.BASE_URL, 
+    origin: allowedOrigins, 
   },
 });
 
