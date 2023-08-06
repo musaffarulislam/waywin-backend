@@ -10,6 +10,7 @@ export class TrainerService {
       const trainerDetails = await this.trainerRepository.findByAuthId(authId);
       const isProfile = trainerDetails?.isProfile;
       const profileImage = trainerDetails?.profileImage?.url
+      const bannerImage = trainerDetails?.bannerImage?.url
       const selectedAuthInfo = {
         _id: trainerDetails?.authId?._id,
         username: trainerDetails?.authId?.username,
@@ -17,7 +18,7 @@ export class TrainerService {
         phoneNumber: trainerDetails?.authId?.phoneNumber,
       };
       const fee = trainerDetails?.fee
-      return {trainerInfo: selectedAuthInfo, isProfile, profileImage, fee};
+      return {trainerInfo: selectedAuthInfo, isProfile, profileImage, bannerImage, fee};
     }catch(error){
       throw error
     }
