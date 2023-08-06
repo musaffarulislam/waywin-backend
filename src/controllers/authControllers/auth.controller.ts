@@ -16,10 +16,12 @@ export class AuthController {
   public signup = async (req: Request, res: Response) => {
     try {
       const { username, email, phoneNumber, role, password } = req.body;
+      console.log("Controller : username:", username," email:", email," phoneNumber:", phoneNumber," role:", role," password:", password)
       const auth: Auth = { username, email, phoneNumber, role, password }
       await this.authService.signup(auth);      
       res.status(201).json({ message: "Otp send successful"});
     } catch (error) { 
+      console.log("Error : ",error)
       res.status(500).json({ error: error.message});
     }
   };
