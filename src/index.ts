@@ -6,10 +6,8 @@ import { Server, Socket  } from "socket.io";
 
 const PORT = env.getPort();
 dotenv.config();
-
-console.log("Env :",process.env.ALLOWED_ORIGINS)
-const allowedOrigins: string[] = process.env.ALLOWED_ORIGINS.split(',');
-console.log(allowedOrigins)
+ 
+const allowedOrigins: string[] = process.env.ALLOWED_ORIGINS.split(','); 
 const server = http.createServer(app); 
 const io = new Server(server, {
   pingTimeout: 60000,
