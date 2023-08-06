@@ -32,6 +32,7 @@ export class TrainerRepositoryImpl {
         }
       })
     } catch (error) {
+      console.log("error : :",error)
       throw new Error("Failed to create trainer");
     }
   }
