@@ -8,7 +8,7 @@ export class TrainerProfileValidator {
         "any.required": "Services is required",
     });
 
-    private static descripitionSchema: Schema = Joi.string().max(250).required().messages({
+    private static descripitionSchema: Schema = Joi.string().max(1000).required().messages({
         "string.base": "Description must be a string",
         "string.max": "Description cannot exceed 250 characters",
         "any.required": "Description is required",
