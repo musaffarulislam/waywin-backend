@@ -177,13 +177,11 @@ export class TrainerRepositoryImpl {
       const offlineCounts: number[] = [];
   
       const currentMonthLabel = today.toISOString().slice(0, 7);
-      if (!labels.includes(currentMonthLabel)) { 
-          labels.push(currentMonthLabel);
-          
-          
-        const data = trainerData.find((item) => item._id === currentMonthLabel);
-        onlineCounts.push(data ? data.onlineCount : 0);
-        offlineCounts.push(data ? data.offlineCount : 0);
+      const currentMonthIndex = labels.indexOf(currentMonthLabel);
+      if (currentMonthIndex !== -1) {
+        labels.splice(currentMonthIndex, 1);
+        onlineCounts.splice(currentMonthIndex, 1);
+        offlineCounts.splice(currentMonthIndex, 1);
       }
 
       for (let i = 0; i <7; i++) {
