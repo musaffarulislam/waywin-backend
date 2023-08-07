@@ -36,7 +36,7 @@ export class TrainerProfileValidator {
     public validateProfileData(req: Request, res: Response, next: NextFunction): any {
         const { error }: ValidationResult = TrainerProfileValidator.profileSchema.validate(req.body);
         if (error) { 
-            console.log(error)
+          console.log(error)
           return res.status(400).json({ message: error.details[0].message });
         }
     

@@ -25,8 +25,7 @@ export class TrainerController {
 
     public createProfile = async (req: CustomRequest, res: Response) => {
         try{ 
-            const {services, description, tags, experience, mode} = req.body;
-            console.log("Controller : :",req.body)
+            const {services, description, tags, experience, mode} = req.body; 
             const authId = req.authId
             const trainerProfile: ITrainerProfile = {services, description, tags, experience, mode}
             await this.trainerService.createProfile(trainerProfile, authId )
