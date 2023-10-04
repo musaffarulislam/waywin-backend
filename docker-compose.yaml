@@ -1,45 +1,51 @@
-services:
-  waywin-db:
-    image: mongo
-    restart: always
-    env_file:
-      - ./.env
-    ports:
-      - "27017:27017"
-    volumes:
-      - /home/ubuntu/mongodata:/data/db
-    networks:
-      - app-network
+version: '3.3'
 
+services:
   nodejs:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
-    env_file:
-      - ./.env
-    # environment:
-    #   - PORT=3000
-    #   - MONGO_URI=mongodb://waywin-db:27017
-    ports:
-      - "4000:4000"
+    image: nodejs
+    container_name: nodejs
+    restart: unless-stopped
     networks:
       - app-network
-    depends_on:
-      - waywin-db
 
-  nginx:
-    image: nginx:1.23.3-alpine
-    restart: always
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
     ports:
       - "80:80"
-      - "443:443"
-    networks:
-      - app-network
+    volumes:
+      - web-root:/var/www/waywin.musaffarulislam.com
+      - ./nginx-conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     depends_on:
       - nodejs
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/bookworm.musaffarulislam.com
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/waywin.musaffar.com --email ubuntu@ip-172-31-34-6 --agree-tos --no-eff-email --staging -d waywin.musaffar.com -d www.waywin.musaffar.com
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
 
 networks:
   app-network:
