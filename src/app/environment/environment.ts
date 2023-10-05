@@ -3,7 +3,6 @@ dotenv.config();
 
 const environment_name: string = process.env.Environment;
 const PORT: number = Number(process.env.PORT);
-const DB_PREFIX: string = process.env.DB_NAME;
 
 enum Environments {
     local_environment = "local",
@@ -21,12 +20,6 @@ class Environment {
         [Environments.qa_environment]: 3,
     };
 
-    private dbNames: { [key: string]: string } = {
-        [Environments.prod_environment]: `${DB_PREFIX}prod`,
-        [Environments.dev_environment]: `${DB_PREFIX}dev`,
-        [Environments.qa_environment]: `${DB_PREFIX}qa`,
-        [Environments.local_environment]: `${DB_PREFIX}local`,
-    };
 
     constructor(environment: string) {
         this.environment = environment
@@ -37,9 +30,6 @@ class Environment {
         return PORT + portOffset;
     }
 
-    getDBName(): string {
-        return this.dbNames[this.environment] || `${DB_PREFIX}local`;
-    }
 }
 
 export default new Environment(environment_name)
